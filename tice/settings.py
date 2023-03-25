@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-3@j6!7j!kul#btwjfc-#^bt*d8f896sjt@ul!-qlf2z$iz&mhx
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -39,11 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+CORS_ORIGIN_ALLOW_ALL = True  #跨域访问
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  #跨域访问
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -75,8 +79,12 @@ WSGI_APPLICATION = 'tice.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'tice',
+        'USER': 'root',
+        'PASSWORD': 'loko5284',
+        'HOST':'127.0.0.1',
+        'PORT':'3306',
     }
 }
 
@@ -105,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -117,9 +125,46 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
+
+# 设置邮件域名 发送邮件服务器：smtp.qq.com
+EMAIL_HOST = 'smtp.sina.com'
+# 设置端口号，为数字  使用SSL，端口号465或587
+EMAIL_PORT = 25
+# 设置发件人邮箱
+EMAIL_HOST_USER = 'isliliyu@sina.com'
+# 设置发件人授权码
+EMAIL_HOST_PASSWORD = '5fe8697e805c13ae'
+# 设置是否启用安全连接
+EMAIL_USER_TLS = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",		# 使用django-redis的缓存
+        "LOCATION": "redis://127.0.0.1:6379/0",			# redis数据库的位置
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "CONNECTION_POOL_KWARGS": {"max_connections": 100},
+            "DECODE_RESPONSES": True,			# 自动将byte转成字符串
+            "PASSWORD": "",						# 设置密码
+        }
+    }
+}
+
+
+# CRONJOBS = [
+#     ('*/1 * * * *', 'main.crontab.Crontab.updateStaticHistory', '>> ' + str(BASE_DIR) + '/logs/updateStaticHistory.log'), # 注意：/tmp/base_api 目录要手动创建
+# ]
