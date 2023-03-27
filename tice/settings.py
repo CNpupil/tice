@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'main'
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True  #跨域访问
@@ -81,8 +82,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'tice',
-        'USER': 'root',
-        'PASSWORD': 'loko5284',
+        'USER': 'tice',
+        'PASSWORD': 'adminadmin',
         'HOST':'127.0.0.1',
         'PORT':'3306',
     }
