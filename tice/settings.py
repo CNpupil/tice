@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+import datetime
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -52,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'main.middlewares.CheckTokenMiddleware.CheckTokenMiddleware'
 ]
 
 ROOT_URLCONF = 'tice.urls'
@@ -82,9 +84,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'tice',
-        'USER': 'tice',
-        'PASSWORD': 'adminadmin',
-        'HOST':'127.0.0.1',
+        'USER': 'lly',
+        'PASSWORD': 'Loko5284',
+        'HOST':'liliyu-tice.rwlb.cn-chengdu.rds.aliyuncs.com',
         'PORT':'3306',
     }
 }
@@ -126,11 +128,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = '/static/'
 
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
 
 # Default primary key field type
@@ -169,3 +171,8 @@ CACHES = {
 # CRONJOBS = [
 #     ('*/1 * * * *', 'main.crontab.Crontab.updateStaticHistory', '>> ' + str(BASE_DIR) + '/logs/updateStaticHistory.log'), # 注意：/tmp/base_api 目录要手动创建
 # ]
+
+
+JWT_SECRET_KEY = 'your-secret-key'
+JWT_ALGORITHM = 'HS256'
+JWT_EXPIRATION_DELTA = 3600

@@ -1,11 +1,14 @@
 from rest_framework.views import APIView
 from django.core import serializers
 from django.http import JsonResponse
+from django.core.cache import cache
 
 from main import models
 from main import tools
+from tice import settings
 
 import json
+import jwt
 
 
 class User(APIView):
@@ -131,6 +134,17 @@ class Login(APIView):
             if tools.genearteMD5(password) != user.password:
                 return JsonResponse({'code': 400, 'msg': '用户名或密码错误'})
 
+            payload = {
+                'uid': user.id,
+                'auth': user.auth,
+            }
+            user.token = jwt.encode(payload, settings.JWT_SECRET_KEY, algorithm=settings.JWT_ALGORITHM)
+            user.save()
+
+            cache.set(user.token, tools.getNowTimeStamp() + settings.JWT_EXPIRATION_DELTA, timeout=settings.JWT_EXPIRATION_DELTA)
+            print(cache.get(user.token))
+
+            ret['token'] = user.token
             ret['data'] = serializers.serialize('json', [user])
 
         except Exception as e:

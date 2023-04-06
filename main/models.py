@@ -39,6 +39,7 @@ class StudentInfomation(models.Model):
     source = models.CharField(max_length=30, default='')
     address = models.TextField(default='')
     idcard = models.CharField(max_length=19, default='')
+    nation = models.CharField(max_length=19, default='')
 
 
 class score(models.Model):
@@ -66,3 +67,7 @@ class score(models.Model):
     curlorup_score = models.IntegerField(default=65, null=True)
     end_score = models.IntegerField(default=65, null=True)
     remark = models.TextField(default='')
+
+
+class TempFile(models.Model):
+    file = models.FileField(upload_to='temp/', max_length=100)
