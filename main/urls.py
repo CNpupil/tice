@@ -1,6 +1,6 @@
 from django.conf.urls import url
-from main.views.User import User, Login, Register, ChangePassword
-from main.views.UploadData import UploadStudentInfomation
+from main.views.user import User, Login, Register, ChangePassword
+from main.views.upload import UploadStudentInfomation
 
 
 urlpatterns = [

@@ -44,7 +44,7 @@ class User(APIView):
 
         except Exception as e:
             ret = {'code': 500, 'msg': 'Timeout'}
-            ret = {'code': 500, 'msg': str(e)}
+            # ret = {'code': 500, 'msg': str(e)}
 
         return JsonResponse(ret)
 
@@ -111,7 +111,7 @@ class Register(APIView):
 
         except Exception as e:
             ret = {'code': 500, 'msg': 'Timeout'}
-            ret = {'code': 500, 'msg': str(e)}
+            # ret = {'code': 500, 'msg': str(e)}
 
         return JsonResponse(ret)
 
@@ -142,13 +142,13 @@ class Login(APIView):
             user.save()
 
             cache.set(user.token, tools.getNowTimeStamp() + settings.JWT_EXPIRATION_DELTA, timeout=settings.JWT_EXPIRATION_DELTA)
-            print(cache.get(user.token))
+            # print(cache.get(user.token))
 
             ret['token'] = user.token
             ret['data'] = serializers.serialize('json', [user])
 
         except Exception as e:
             ret = {'code': 500, 'msg': 'Timeout'}
-            ret = {'code': 500, 'msg': str(e)}
+            # ret = {'code': 500, 'msg': str(e)}
 
         return JsonResponse(ret)

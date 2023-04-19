@@ -16,7 +16,7 @@ class UploadStudentInfomation(APIView):
                 return JsonResponse({'code': 400, 'msg': '文件不能为空'})
             
             fileObj = models.TempFile.objects.create(file=file)
-            print(fileObj.file)
+            # print(fileObj.file)
 
         except Exception as e:
             ret = {'code': 500, 'msg': 'Timeout'}

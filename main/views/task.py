@@ -45,12 +45,14 @@ class Task(APIView):
         try:
             data = json.loads(request.body).get('data', {})
 
-            # validate data
+            if None in [data.get('key', None), data.get('value', None)]:
+                return JsonResponse({'code': 400, 'msg': '参数错误'})
 
             task = models.Task.objects.filter(pk=data.get('task_pk', 0)).first()
             if task is None:
                 return JsonResponse({'code': 400, 'msg': '任务不存在'})
-            setatter(task, data['key'], data['value'])            
+            setattr(task, data['key'], data['value']) 
+            task.save()           
 
         except Exception as e:
             ret = {'code': 500, 'msg': 'Timeout'}

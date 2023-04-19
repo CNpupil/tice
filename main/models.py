@@ -42,7 +42,7 @@ class StudentInfomation(models.Model):
     nation = models.CharField(max_length=19, default='')
 
 
-class score(models.Model):
+class Score(models.Model):
     task = models.ForeignKey("main.Task", models.CASCADE)
     student = models.ForeignKey("main.StudentInfomation", models.CASCADE)
     height = models.DecimalField(max_digits=6, decimal_places=2, default=160, null=True)
@@ -67,6 +67,28 @@ class score(models.Model):
     curlorup_score = models.IntegerField(default=65, null=True)
     end_score = models.IntegerField(default=65, null=True)
     remark = models.TextField(default='')
+
+
+class ScoreStandard(models.Model):
+    grade = models.TextField(default='low')
+    bmi = models.TextField(default='[]')
+    pulmonary = models.TextField(default='[]')
+    run50 = models.TextField(default='[]')
+    jump = models.TextField(default='[]')
+    flexion = models.TextField(default='[]')
+    run800 = models.TextField(default='[]')
+    run1000 = models.TextField(default='[]')
+    adbominal_curl = models.TextField(default='[]')
+    pull_up = models.TextField(default='[]')
+    run1000 = models.TextField(default='[]')
+    end_score = models.TextField(default='[]')
+
+
+class ClassInfomation(models.Model):
+    grade = models.TextField(default='未知')
+    college = models.TextField(default='未知')
+    major = models.TextField(default='未知')
+    class_id = models.TextField(default='')
 
 
 class TempFile(models.Model):
