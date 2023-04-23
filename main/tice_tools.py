@@ -1,3 +1,6 @@
+from datetime import datetime
+
+
 def preprocessing(value):
     value = str(value)
     value = value.strip()
@@ -26,6 +29,10 @@ def int_to_time(value):
     a, b = value // 60, value % 60
     return "{}'{}".format(a, b)
 
+def birthday_to_timestamp(value):
+    date_obj = datetime.strptime(value, '%Y%m%d')
+    timestamp = datetime.timestamp(date_obj)   
+    return timestamp 
 
 grading = [
     {'value': 100, 'score': 100}, 

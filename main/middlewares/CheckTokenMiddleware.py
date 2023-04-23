@@ -12,6 +12,7 @@ import jwt
 class CheckTokenMiddleware(MiddlewareMixin):
     def process_request(self,request):
         try:
+            return None
             path = request.path_info[1:]
             if path in ['login']:
                 return None

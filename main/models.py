@@ -27,6 +27,11 @@ class Task(models.Model):
     half = models.IntegerField(default=0)
 
 
+class TeacherInfomation(models.Model):
+    uid = models.CharField(max_length=50, unique=True, db_index=True, default='null')
+    name = models.CharField(max_length=30, default='')
+
+
 class StudentInfomation(models.Model):
     uid = models.CharField(max_length=50, unique=True, db_index=True, default='null')
     college = models.CharField(max_length=30, default='')
