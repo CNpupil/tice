@@ -37,7 +37,7 @@ class StudentInfomation(models.Model):
     college = models.CharField(max_length=30, default='')
     grade = models.IntegerField(default=2019)
     major = models.CharField(max_length=50, default='')
-    class_number = models.IntegerField(default=1)
+    class_name = models.IntegerField(default=1)
     name = models.CharField(max_length=30, default='')
     sex = models.IntegerField(default=0)
     brithday = models.IntegerField(default=0)

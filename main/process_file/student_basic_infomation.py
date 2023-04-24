@@ -46,7 +46,7 @@ def save_data(students):
         item = {}
         item['uid'] = student[name_index['uid']['idx']]
         item['name'] = student[name_index['name']['idx']]
-        item['sex'] = 1 if student[name_index['name']['idx']] == '男' else '女'
+        item['sex'] = 1 if student[name_index['name']['idx']] == '男' else 2
         item['grade'] = student[name_index['grade']['idx']]
         item['college'] = student[name_index['college']['idx']]
         item['major'] = student[name_index['major']['idx']]
