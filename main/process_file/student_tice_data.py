@@ -7,8 +7,8 @@ from main import tice_tools, models
 
 def init():
     global name_index
-    name_index_ch = ['学号', '姓名', '性别', '年级', '身高', '体重', '肺活量', '50m', '跳远', '坐位体前屈', '800m', '1000m', '仰卧起坐', '引体向上', '左眼视力', '右眼视力']
-    name_index_en = ['uid', 'name', 'sex', 'grade', 'height', 'weight', 'pulmonary', 'run50', 'jump', 'flextion', 'run800', 'run1000', 'adbominal_curl', 'pull_up', 'left_eye', 'right_eye']
+    name_index_ch = ['学号', '姓名', '性别', '身高', '体重', '肺活量', '50m', '坐位体前屈', '跳远', '800m', '1000m', '仰卧起坐', '引体向上', '左眼视力', '右眼视力']
+    name_index_en = ['uid', 'name', 'sex', 'height', 'weight', 'pulmonary', 'run50', 'flextion', 'jump', 'run800', 'run1000', 'adbominal_curl', 'pull_up', 'left_eye', 'right_eye']
     name_index = { name_index_en[i]: {'name_ch': name_index_ch[i], 'idx': i} for i in range(len(name_index_ch)) }
 
 def read_data_from_excel(filename):
@@ -26,9 +26,10 @@ def read_data_from_excel(filename):
 def preprocess_data(students):
     # validate data
     for student in students:
-        student[name_index['uid']] = tice_tools.preprocessing(student[name_index['uid']])
-        student[name_index['name']] = tice_tools.preprocessing(student[name_index['name']])
-        student[name_index['sex']] = tice_tools.preprocessing(student[name_index['sex']])
+        student[name_index['uid']['idx']] = tice_tools.preprocessing(student[name_index['uid']['idx']])
+        student[name_index['name']['idx']] = tice_tools.preprocessing(student[name_index['name']['idx']])
+        student[name_index['sex']['idx']] = tice_tools.preprocessing(student[name_index['sex']['idx']])
+    return students
 
 
 def save_data(students, task_id):
@@ -36,16 +37,24 @@ def save_data(students, task_id):
         # validate data
         item = {}
         item['task_id'] = task_id
-        item['student_id'] = student[name_index['uid']]
+        item['student_id'] = student[name_index['uid']['idx']]
+        for i in name_index.keys():
+            item[i] = student[name_index[i]['idx']]
         
-
-        models.StudentInfomation.objects.update_or_create(
-            defaults=item,
-            student_id = item['student_id'],
-            task_id = item['task_id']
+        item['sex'] = 1 if student[name_index['sex']['idx']] == '男' else 2
+        if item['sex'] == 2:
+            item['run800'] = tice_tools.time_to_int(student[name_index['run800']['idx']])
+        else:
+            item['run1000'] = tice_tools.time_to_int(student[name_index['run1000']['idx']])
+        student = models.StudentInfomation.objects.filter(uid=item['student_id']).first()
+        item['student_id'] = student.pk
+        models.Score.objects.update_or_create(
+            defaults = item,
+            task_id = item['task_id'],
+            student_id = student.pk,
         )
 
-def read_student_infomation(task_id, filename):
+def read_student_score(task_id, filename):
     students = read_data_from_excel(filename)
     init()
     students = preprocess_data(students)

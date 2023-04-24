@@ -22,7 +22,7 @@ def convert_to_float(value, decimal=2):
     return value
 
 def time_to_int(value):
-    a, b = map(eval, str(value).split("'"))
+    a, b = map(int, str(value).split("'"))
     return a * 60 + b
 
 def int_to_time(value):
