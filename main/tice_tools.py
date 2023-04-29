@@ -135,5 +135,13 @@ class CalcScore:
         self.end_score = calc_end_score(value, self.end_score_standard)
         return self.end_score
     
+    def calc_item_score(self, key, value):
+        score = getattr(self, 'calc_{}_score'.format(key))(value)
+        return score
+
+    # def calc_all_score(self, data):
+    #     for key in data.keys():
+    #         self.calc_item_score(key, data[key])
+    #         {}
     
     

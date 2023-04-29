@@ -65,10 +65,28 @@ def save_data(students):
             uid = item['uid']
         )
 
+def read_class(students):
+    class_infomation = []
+    for student in students:
+        item = {
+            'college': student[name_index['college']['idx']],
+            'major': student[name_index['major']['idx']],
+            'class_id': student[name_index['class_name']['idx']],
+        }
+        if item not in class_infomation:
+            class_infomation.append(item)
+    for item in class_infomation:
+        models.ClassInfomation.objects.update_or_create(
+            defaults=item,
+            **item
+        )
+    
+
 def read_student_infomation(task_id, filename):
     students = read_data_from_excel(filename)
     init()
     students = preprocess_data(students)
     save_data(students)
+    read_class(students)
 
     

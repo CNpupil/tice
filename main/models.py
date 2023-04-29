@@ -28,11 +28,13 @@ class Task(models.Model):
 
 
 class TeacherInfomation(models.Model):
+    user = models.OneToOneField("main.User", on_delete=models.CASCADE)
     uid = models.CharField(max_length=50, unique=True, db_index=True, default='null')
     name = models.CharField(max_length=30, default='')
 
 
 class StudentInfomation(models.Model):
+    user = models.OneToOneField("main.User", on_delete=models.CASCADE)
     uid = models.CharField(max_length=50, unique=True, db_index=True, default='null')
     college = models.CharField(max_length=30, default='')
     grade = models.IntegerField(default=2019)
@@ -71,6 +73,7 @@ class Score(models.Model):
     runlong_score = models.IntegerField(default=65, null=True)
     curlorup_score = models.IntegerField(default=65, null=True)
     end_score = models.IntegerField(default=65, null=True)
+    teacher = models.ForeignKey("main.TeacherInfomation", models.CASCADE)
     remark = models.TextField(default='')
 
 

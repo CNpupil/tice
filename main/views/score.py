@@ -91,3 +91,64 @@ class ScoreStatics(APIView):
             ret = {'code': 500, 'msg': 'Timeout'}
 
         return JsonResponse(ret)
+    
+
+
+class calculate_score(APIView):
+    # 给定一个数据计算相应的分数
+    def get(self, request, *args, **kwargs):
+        ret = {'code': 200, 'msg': 'ok'}
+        try:
+            key = request.GET.get('key', '')
+            value = request.GET.get('value', '')
+            grad_level = request.GET.get('grad_level', 'low')
+
+            calc = tice_tools.CalcScore(grad_level)
+            ret['data'] = calc.calc_item_score(key, value)
+
+        except Exception as e:
+            ret = {'code': 500, 'msg': 'Timeout'}
+
+        return JsonResponse(ret)
+    
+
+class ScoreStandard(APIView):
+    # 获取一个项目的评分标准
+    def get(self, request, *args, **kwargs):
+        ret = {'code': 200, 'msg': 'ok'}
+        try:
+            key = request.GET.get('key', '')
+            if models.ScoreStandard.objects.all().count() == 0:
+                models.ScoreStandard.objects.create()
+            
+            data = models.ScoreStandard.all()
+            ret['data'] = serializers.serialize('json', data)
+
+        except Exception as e:
+            ret = {'code': 500, 'msg': 'Timeout'}
+
+        return JsonResponse(ret)
+    
+    # 修改一个项目的评分标准
+    def put(self, request, *args, **kwargs):
+        ret = {'code': 200, 'msg': 'ok'}
+        try:
+            data = json.loads(request.body).get('data', {})
+            key = data.get('key', '')
+            value = data.get('value', '[]')
+            
+            try:
+                json.loads(value)
+            except Exception as e:
+                return JsonResponse({'code': 400, 'msg': '格式错误'})
+            # validate data
+
+            models.ScoreStandard.objects.update_or_create(
+                defaults={key: value},
+                pk=1
+            )
+
+        except Exception as e:
+            ret = {'code': 500, 'msg': 'Timeout'}
+
+        return JsonResponse(ret)
