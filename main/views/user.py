@@ -152,3 +152,45 @@ class Login(APIView):
             # ret = {'code': 500, 'msg': str(e)}
 
         return JsonResponse(ret)
+    
+
+class Teacher(APIView):
+    def get(self, request, *args, **kwargs):
+        ret = {'code': 200, 'msg': 'ok'}
+        try:
+            teachers = models.TeacherInfomation.objects.all().order_by('pk')
+            ret['data'] = serializers.serialize('json', teachers)
+
+        except Exception as e:
+            ret = {'code': 500, 'msg': 'Timeout'}
+            ret = {'code': 500, 'msg': 'Timeout', 'error': str(e)}
+
+        return JsonResponse(ret)
+    
+    def post(self, request, *args, **kwargs):
+        ret = {'code': 200, 'msg': '添加成功'}
+        try:
+            data = json.loads(request.body).get('data', {})
+            uid = data.get('uid', '')
+            name = data.get('name', '')
+
+            if models.TeacherInfomation.objects.filter(uid=uid).count() != 0:
+                return JsonResponse({'code': 400, 'msg': '该教师已经存在'})
+
+            models.User.objects.create(
+                uid = uid, 
+                password = tools.genearteMD5(uid),
+                name = name,
+                status = 1
+            )
+            models.TeacherInfomation.objects.create(
+                user_id = models.User.objects.filter(uid=uid).first().pk,
+                uid = uid,
+                name = name
+            )
+
+        except Exception as e:
+            ret = {'code': 500, 'msg': 'Timeout'}
+            ret = {'code': 500, 'msg': 'Timeout', 'error': str(e)}
+
+        return JsonResponse(ret)

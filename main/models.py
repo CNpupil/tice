@@ -52,28 +52,28 @@ class StudentInfomation(models.Model):
 class Score(models.Model):
     task = models.ForeignKey("main.Task", models.CASCADE)
     student = models.ForeignKey("main.StudentInfomation", models.CASCADE)
-    height = models.DecimalField(max_digits=6, decimal_places=2, default=160, null=True)
-    weight = models.DecimalField(max_digits=6, decimal_places=2, default=50, null=True)
-    pulmonary = models.IntegerField(default=2000, null=True)
-    run50 = models.DecimalField(max_digits=6, decimal_places=2, default=10, null=True)
-    jump = models.DecimalField(max_digits=6, decimal_places=2, default=180, null=True)
-    flexion = models.DecimalField(max_digits=6, decimal_places=2, default=10, null=True)
-    run800 = models.IntegerField(default=0, null=True)
-    run1000 = models.IntegerField(default=0, null=True)
-    adbominal_curl = models.IntegerField(default=30, null=True)
-    pull_up = models.IntegerField(default=5, null=True)
-    left_eye = models.DecimalField(max_digits=6, decimal_places=2, default=5, null=True)
-    right_eye = models.DecimalField(max_digits=6, decimal_places=2, default=5, null=True)
+    height = models.DecimalField(max_digits=6, decimal_places=2, null=True)
+    weight = models.DecimalField(max_digits=6, decimal_places=2, null=True)
+    pulmonary = models.IntegerField(null=True)
+    run50 = models.DecimalField(max_digits=6, decimal_places=2, null=True)
+    jump = models.DecimalField(max_digits=6, decimal_places=2, null=True)
+    flexion = models.DecimalField(max_digits=6, decimal_places=2, null=True)
+    run800 = models.IntegerField(null=True)
+    run1000 = models.IntegerField(null=True)
+    adbominal_curl = models.IntegerField(null=True)
+    pull_up = models.IntegerField(null=True)
+    left_eye = models.DecimalField(max_digits=6, decimal_places=2, null=True)
+    right_eye = models.DecimalField(max_digits=6, decimal_places=2, null=True)
 
-    bmi_score = models.IntegerField(default=65, null=True)
-    pulmonary_score = models.IntegerField(default=65, null=True)
-    run50_score = models.IntegerField(default=65, null=True)
-    jump_score = models.IntegerField(default=65, null=True)
-    flexion_score = models.IntegerField(default=65, null=True)
-    runlong_score = models.IntegerField(default=65, null=True)
-    curlorup_score = models.IntegerField(default=65, null=True)
-    end_score = models.IntegerField(default=65, null=True)
-    teacher = models.ForeignKey("main.TeacherInfomation", models.CASCADE)
+    bmi_score = models.IntegerField(null=True)
+    pulmonary_score = models.IntegerField(null=True)
+    run50_score = models.IntegerField(null=True)
+    jump_score = models.IntegerField(null=True)
+    flexion_score = models.IntegerField(null=True)
+    runlong_score = models.IntegerField(null=True)
+    curlorup_score = models.IntegerField(null=True)
+    end_score = models.IntegerField(null=True)
+    teacher = models.ForeignKey("main.TeacherInfomation", models.CASCADE, null=True, blank=True)
     remark = models.TextField(default='')
 
 
@@ -101,3 +101,55 @@ class ClassInfomation(models.Model):
 
 class TempFile(models.Model):
     file = models.FileField(upload_to='temp/', max_length=100)
+
+
+# null
+
+
+# class Category(models.Model):
+#     # netflix / apple music / chatgpt
+#     type_name = models.CharField(max_length=20, default='', verbose_name='类别')
+#     name = models.TextField(default='', verbose_name='类别名称')
+#     sum_seat = models.IntegerField(default=5, verbose_name='最大人数')
+#     year_price = models.FloatField(default=1, verbose_name='年费用')
+#     quarter_price = models.FloatField(default=1, verbose_name='季度费用')
+#     month_price = models.FloatField(default=1, verbose_name='月费用')
+#     day_price = models.FloatField(default=1, verbose_name='日费用')
+
+#     def __str__(self):
+#         return self.name
+    
+
+# class Warehouse(models.Model):
+#     info = models.ForeignKey("main.Category", on_delete=models.CASCADE, verbose_name='类别')
+#     username = models.TextField(default='', verbose_name='账号')
+#     password = models.TextField(default='', verbose_name='密码')
+#     expired_time = models.DateTimeField(default=0, verbose_name='过期时间')
+#     register_email = models.TextField(default='', verbose_name='注册邮箱')
+
+#     def __str__(self):
+#         return self.username
+    
+
+# class account(models.Model):
+#     warehouse = models.ForeignKey("main.Warehouse", on_delete=models.CASCADE, verbose_name='房主')
+#     # 0：not initialized 1: use 2: use over
+#     status = models.IntegerField(default=0, berbose_name='状态')
+#     expired_time = models.DateTimeField(default=0, verbose_name='过期时间')
+#     price = models.FloatField(default=0, verbose_name='价格')
+
+#     def __str__(self):
+#         return self.status
+    
+
+# class PureAccount(models.Model):
+#     username = models.TextField(default='', verbose_name='账号')
+#     password = models.TextField(default='', verbose_name='密码')
+#     register_email = models.TextField(default='', verbose_name='注册邮箱')
+#     type_name = models.TextField(default='', verbose_name='类型')
+#     # 0： use 1: use over
+#     status = models.IntegerField(default='', verbose_name='状态')
+
+#     def __str__(self):
+#         return self.username
+    

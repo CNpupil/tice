@@ -1,0 +1,442 @@
+[
+    {
+        "low": {
+            "male": {
+                "score": 100,
+                "value": 5040
+            },
+            "female": {
+                "score": 100,
+                "value": 3400
+            }
+        },
+        "high": {
+            "male": {
+                "score": 100,
+                "value": 5140
+            },
+            "female": {
+                "score": 100,
+                "value": 3450
+            }
+        }
+    },
+    {
+        "low": {
+            "male": {
+                "score": 95,
+                "value": 4920
+            },
+            "female": {
+                "score": 95,
+                "value": 3350
+            }
+        },
+        "high": {
+            "male": {
+                "score": 95,
+                "value": 5020
+            },
+            "female": {
+                "score": 95,
+                "value": 3400
+            }
+        }
+    },
+    {
+        "low": {
+            "male": {
+                "score": 90,
+                "value": 4800
+            },
+            "female": {
+                "score": 90,
+                "value": 3300
+            }
+        },
+        "high": {
+            "male": {
+                "score": 90,
+                "value": 4900
+            },
+            "female": {
+                "score": 90,
+                "value": 3350
+            }
+        }
+    },
+    {
+        "low": {
+            "male": {
+                "score": 85,
+                "value": 4550
+            },
+            "female": {
+                "score": 85,
+                "value": 3150
+            }
+        },
+        "high": {
+            "male": {
+                "score": 85,
+                "value": 4650
+            },
+            "female": {
+                "score": 85,
+                "value": 3200
+            }
+        }
+    },
+    {
+        "low": {
+            "male": {
+                "score": 80,
+                "value": 4300
+            },
+            "female": {
+                "score": 80,
+                "value": 3000
+            }
+        },
+        "high": {
+            "male": {
+                "score": 80,
+                "value": 4400
+            },
+            "female": {
+                "score": 80,
+                "value": 3050
+            }
+        }
+    },
+    {
+        "low": {
+            "male": {
+                "score": 78,
+                "value": 4180
+            },
+            "female": {
+                "score": 78,
+                "value": 2900
+            }
+        },
+        "high": {
+            "male": {
+                "score": 78,
+                "value": 4280
+            },
+            "female": {
+                "score": 78,
+                "value": 2950
+            }
+        }
+    },
+    {
+        "low": {
+            "male": {
+                "score": 76,
+                "value": 4060
+            },
+            "female": {
+                "score": 76,
+                "value": 2800
+            }
+        },
+        "high": {
+            "male": {
+                "score": 76,
+                "value": 4160
+            },
+            "female": {
+                "score": 76,
+                "value": 2850
+            }
+        }
+    },
+    {
+        "low": {
+            "male": {
+                "score": 74,
+                "value": 3940
+            },
+            "female": {
+                "score": 74,
+                "value": 2700
+            }
+        },
+        "high": {
+            "male": {
+                "score": 74,
+                "value": 4040
+            },
+            "female": {
+                "score": 74,
+                "value": 2750
+            }
+        }
+    },
+    {
+        "low": {
+            "male": {
+                "score": 72,
+                "value": 3820
+            },
+            "female": {
+                "score": 72,
+                "value": 2600
+            }
+        },
+        "high": {
+            "male": {
+                "score": 72,
+                "value": 3920
+            },
+            "female": {
+                "score": 72,
+                "value": 2650
+            }
+        }
+    },
+    {
+        "low": {
+            "male": {
+                "score": 70,
+                "value": 3700
+            },
+            "female": {
+                "score": 70,
+                "value": 2500
+            }
+        },
+        "high": {
+            "male": {
+                "score": 70,
+                "value": 3800
+            },
+            "female": {
+                "score": 70,
+                "value": 2550
+            }
+        }
+    },
+    {
+        "low": {
+            "male": {
+                "score": 68,
+                "value": 3580
+            },
+            "female": {
+                "score": 68,
+                "value": 2400
+            }
+        },
+        "high": {
+            "male": {
+                "score": 68,
+                "value": 3680
+            },
+            "female": {
+                "score": 68,
+                "value": 2450
+            }
+        }
+    },
+    {
+        "low": {
+            "male": {
+                "score": 66,
+                "value": 3460
+            },
+            "female": {
+                "score": 66,
+                "value": 2300
+            }
+        },
+        "high": {
+            "male": {
+                "score": 66,
+                "value": 3560
+            },
+            "female": {
+                "score": 66,
+                "value": 2350
+            }
+        }
+    },
+    {
+        "low": {
+            "male": {
+                "score": 64,
+                "value": 3340
+            },
+            "female": {
+                "score": 64,
+                "value": 2200
+            }
+        },
+        "high": {
+            "male": {
+                "score": 64,
+                "value": 3440
+            },
+            "female": {
+                "score": 64,
+                "value": 2250
+            }
+        }
+    },
+    {
+        "low": {
+            "male": {
+                "score": 62,
+                "value": 3220
+            },
+            "female": {
+                "score": 62,
+                "value": 2100
+            }
+        },
+        "high": {
+            "male": {
+                "score": 62,
+                "value": 3320
+            },
+            "female": {
+                "score": 62,
+                "value": 2150
+            }
+        }
+    },
+    {
+        "low": {
+            "male": {
+                "score": 60,
+                "value": 3100
+            },
+            "female": {
+                "score": 60,
+                "value": 2000
+            }
+        },
+        "high": {
+            "male": {
+                "score": 60,
+                "value": 3200
+            },
+            "female": {
+                "score": 60,
+                "value": 2050
+            }
+        }
+    },
+    {
+        "low": {
+            "male": {
+                "score": 50,
+                "value": 2940
+            },
+            "female": {
+                "score": 50,
+                "value": 1960
+            }
+        },
+        "high": {
+            "male": {
+                "score": 50,
+                "value": 3030
+            },
+            "female": {
+                "score": 50,
+                "value": 2010
+            }
+        }
+    },
+    {
+        "low": {
+            "male": {
+                "score": 40,
+                "value": 2780
+            },
+            "female": {
+                "score": 40,
+                "value": 1920
+            }
+        },
+        "high": {
+            "male": {
+                "score": 40,
+                "value": 2860
+            },
+            "female": {
+                "score": 40,
+                "value": 1970
+            }
+        }
+    },
+    {
+        "low": {
+            "male": {
+                "score": 30,
+                "value": 2620
+            },
+            "female": {
+                "score": 30,
+                "value": 1880
+            }
+        },
+        "high": {
+            "male": {
+                "score": 30,
+                "value": 2690
+            },
+            "female": {
+                "score": 30,
+                "value": 1930
+            }
+        }
+    },
+    {
+        "low": {
+            "male": {
+                "score": 20,
+                "value": 2460
+            },
+            "female": {
+                "score": 20,
+                "value": 1840
+            }
+        },
+        "high": {
+            "male": {
+                "score": 20,
+                "value": 2520
+            },
+            "female": {
+                "score": 20,
+                "value": 1890
+            }
+        }
+    },
+    {
+        "low": {
+            "male": {
+                "score": 10,
+                "value": 2300
+            },
+            "female": {
+                "score": 10,
+                "value": 1800
+            }
+        },
+        "high": {
+            "male": {
+                "score": 10,
+                "value": 2350
+            },
+            "female": {
+                "score": 10,
+                "value": 1850
+            }
+        }
+    }
+]

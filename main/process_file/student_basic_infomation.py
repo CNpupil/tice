@@ -1,7 +1,7 @@
 from openpyxl import load_workbook
 import pymysql
 import sys
-from main import tice_tools, models
+from main import tice_tools, models, tools
 
 
 
@@ -40,7 +40,7 @@ def preprocess_data(students):
         student[name_index['grade']['idx']] = tice_tools.convert_to_int(student[name_index['grade']['idx']])
     return students
 
-def save_data(students):
+def save_data(students, task_id):
     for student in students:
         # validate data
         item = {}
@@ -60,10 +60,22 @@ def save_data(students):
         # convert to timestamp
         item['brithday'] = tice_tools.birthday_to_timestamp(item['idcard'][6:14])
 
+        user = models.User.objects.update_or_create(
+            defaults={'status': 1, 'name': item['name'], 'password': tools.genearteMD5(item['uid'])},
+            uid = item['uid']
+        )
+
+        item['user_id'] = models.User.objects.filter(uid=item['uid']).first().pk
         models.StudentInfomation.objects.update_or_create(
             defaults=item,
             uid = item['uid']
         )
+        student_pk = models.StudentInfomation.objects.filter(uid=item['uid']).first().pk
+        if models.Score.objects.filter(task_id=task_id, student_id=student_pk).count() == 0:
+            models.Score.objects.create(
+                student_id = student_pk,
+                task_id = task_id
+            )
 
 def read_class(students):
     class_infomation = []
@@ -86,7 +98,7 @@ def read_student_infomation(task_id, filename):
     students = read_data_from_excel(filename)
     init()
     students = preprocess_data(students)
-    save_data(students)
+    save_data(students, task_id)
     read_class(students)
 
     
