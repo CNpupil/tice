@@ -26,6 +26,9 @@ class Task(models.Model):
     year = models.IntegerField(default=2019)
     half = models.IntegerField(default=0)
 
+    def natural_key(self):
+        return {'name': self.name, 'year': self.year, 'half': self.half}
+
 
 class TeacherInfomation(models.Model):
     user = models.OneToOneField("main.User", on_delete=models.CASCADE)
@@ -88,7 +91,6 @@ class ScoreStandard(models.Model):
     run1000 = models.TextField(default='[]')
     adbominal_curl = models.TextField(default='[]')
     pull_up = models.TextField(default='[]')
-    run1000 = models.TextField(default='[]')
     end_score = models.TextField(default='[]')
 
 

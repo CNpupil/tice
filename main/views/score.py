@@ -14,12 +14,13 @@ class ScoreOnStudent(APIView):
             uid = request.GET.get('uid', None)
             if uid is None:
                 return JsonResponse({'code': 400, 'msg': '学号不能为空'})
-            data = models.Score.objects.filter(student_uid=uid).order_by('pk')
-            data = serializers.serialize('json', data)
+            data = models.Score.objects.filter(student__uid=uid).order_by('pk')
+            data = serializers.serialize('json', data, use_natural_foreign_keys=True)
             ret['data'] = data
 
         except Exception as e:
             ret = {'code': 500, 'msg': 'Timeout'}
+            print(str(e))
 
         return JsonResponse(ret)
     
@@ -118,14 +119,17 @@ class ScoreStandard(APIView):
         ret = {'code': 200, 'msg': 'ok'}
         try:
             key = request.GET.get('key', '')
-            if models.ScoreStandard.objects.all().count() == 0:
-                models.ScoreStandard.objects.create()
+            grade = request.GET.get('grade', 'low')
+            if models.ScoreStandard.objects.filter(grade=grade).count() == 0:
+                models.ScoreStandard.objects.create(grade=grade)
             
-            data = models.ScoreStandard.all()
-            ret['data'] = serializers.serialize('json', data)
+            data = models.ScoreStandard.objects.filter(grade=grade).values(key)
+            # ret['data'] = serializers.serialize('json', data)
+            ret['data'] = json.dumps(list(data)[0])
 
         except Exception as e:
             ret = {'code': 500, 'msg': 'Timeout'}
+            ret = {'code': 500, 'msg': 'Timeout', 'error': str(e)}
 
         return JsonResponse(ret)
     
@@ -135,17 +139,17 @@ class ScoreStandard(APIView):
         try:
             data = json.loads(request.body).get('data', {})
             key = data.get('key', '')
+            grade = data.get('grade', 'low')
             value = data.get('value', '[]')
             
             try:
-                json.loads(value)
+                value = json.dumps(value)
             except Exception as e:
                 return JsonResponse({'code': 400, 'msg': '格式错误'})
             # validate data
 
-            models.ScoreStandard.objects.update_or_create(
+            models.ScoreStandard.objects.filter(grade=grade).update_or_create(
                 defaults={key: value},
-                pk=1
             )
 
         except Exception as e:

@@ -42,15 +42,15 @@ grading = [
 ]
 def calc_item_score(value, grading, order=True):
     for t in grading:
-        res = value >= t.value if order else value <= t.value
+        res = value >= t['value'] if order else value <= t['value']
         if res:
-            return t.score
+            return t['score']
     return 0
 
 scores = [{'name': 88}, ]
-weights = [{'bmi': 0.2}, ]
+weights = {'bmi': 0.15, 'pulmonary': 0.15, 'run50': 0.2, 'jump': 0.1, 'flexion': 0.1, 'runlong': 0.2, 'curlorup': 0.1}
 def calc_end_score(scores, weights):
-    end_score = sum([scores[key] * weights[key] for key in scores.keys()])
+    end_score = sum([(getattr(scores, key+'_score') if getattr(scores, key+'_score') else 0) * weights[key] for key in weights.keys()])
     return end_score
 
 scores = [99, 22]
@@ -73,30 +73,33 @@ def calc_tags_count(scores):
         tags[grade_name] = tags.get(grade_name, 0) + 1
     return tags
 
+def calc_grade(year, half, grade):
+    if (year - grade) <= 2 and half == 1:
+        return 'low'
+    return 'high'
 
 
-from main import models
+
+from main.models import ScoreStandard, Score, StudentInfomation, Task
 import json
 
 
 class CalcScore:
-    def __init__(self, grade='low'):
-        score_standard = models.ScoreStandard.objects.filter(grade=grade).first()
-        self.bmi_standard = json.loads(score_standard.bmi)
-        self.pulmonary_standard = json.loads(score_standard.pulmonary)
-        self.run50_standard = json.loads(score_standard.run50)
-        self.jump_standard = json.loads(score_standard.jump)
-        self.flexion_standard = json.loads(score_standard.flexion)
-        self.run800_standard = json.loads(score_standard.run800)
-        self.run1000_standard = json.loads(score_standard.run1000)
-        self.adbominal_curl_standard = json.loads(score_standard.adbominal_curl)
-        self.pull_up_standard = json.loads(score_standard.pull_up)
-        self.run1000_standard = json.loads(score_standard.run1000)
+    def __init__(self, grade='low', sex='male'):
+        score_standard = ScoreStandard.objects.filter(grade=grade).first()
+        self.bmi_standard = json.loads(score_standard.bmi)[sex]
+        self.pulmonary_standard = json.loads(score_standard.pulmonary)[sex]
+        self.run50_standard = json.loads(score_standard.run50)[sex]
+        self.jump_standard = json.loads(score_standard.jump)[sex]
+        self.flexion_standard = json.loads(score_standard.flexion)[sex]
+        self.run800_standard = json.loads(score_standard.run800)[sex]
+        self.run1000_standard = json.loads(score_standard.run1000)[sex]
+        self.adbominal_curl_standard = json.loads(score_standard.adbominal_curl)[sex]
+        self.pull_up_standard = json.loads(score_standard.pull_up)[sex]
         self.end_score_standard = json.loads(score_standard.end_score)
 
-    # bmi需要特殊处理
     def calc_bmi_score(self, value):
-        self.bmi_score  = calc_item_score(value, self.bmi_standard)
+        self.bmi_score = calc_item_score(value, self.bmi_standard)
         return self.bmi_score
 
     def calc_pulmonary_score(self, value):
@@ -139,9 +142,39 @@ class CalcScore:
         score = getattr(self, 'calc_{}_score'.format(key))(value)
         return score
 
-    # def calc_all_score(self, data):
-    #     for key in data.keys():
-    #         self.calc_item_score(key, data[key])
-    #         {}
+    def calc_all_score(self, data, keys=[]):
+        for key in keys:
+            self.calc_item_score(key, data[key])
     
     
+def calc_all_score(task_id, student_id):
+    score = Score.objects.filter(task_id=task_id, student_id=student_id).first()
+    task = Task.objects.filter(pk=task_id).first()
+    student = StudentInfomation.objects.filter(pk=student_id).first()
+
+    calc_score = CalcScore(
+        grade=calc_grade(task.year, task.half, student.grade),
+        sex='male' if student.sex == 1 else 'female'
+    )
+    
+    if score.height != None and score.weight != None:
+        score.bmi_score = calc_score.calc_bmi_score(score.weight / ((score.height / 100) ** 2))
+    if score.pulmonary:
+        score.pulmonary_score = calc_score.calc_pulmonary_score(score.pulmonary)
+    if score.flexion:
+        score.flexion_score = calc_score.calc_flexion_score(score.flexion)
+    if score.jump:
+        score.jump_score = calc_score.calc_jump_score(score.jump)
+    if score.run50:
+        score.run50_score = calc_score.calc_run50_score(score.run50)
+    if score.run800 and student.sex == 2:
+        score.runlong_score = calc_score.calc_run800_score(score.run800)
+    if score.run1000 and student.sex == 1:
+        score.runlong_score = calc_score.calc_run1000_score(score.run1000)
+    if score.adbominal_curl and student == 2:
+        score.curlorup_score = calc_score.calc_adbominal_curl_score(score.adbominal_curl)
+    if score.pull_up and student.sex == 1:
+        score.curlorup_score = calc_score.calc_pull_up_score(score.pull_up)
+    score.end_score = calc_score.calc_end_score(score)
+
+    score.save()

@@ -3,7 +3,7 @@ from django.core import serializers
 from django.http import JsonResponse
 
 from main import models
-from main import tools
+from main import tools, tice_tools
 
 import json
 import math
@@ -126,18 +126,21 @@ class DistributeTeacher(APIView):
     
 
 class TaskByTeacher(APIView):
-    def post(self, request, *args, **kwargs):
-        ret = {'code': 200, 'msg': '分配成功'}
+    def get(self, request, *args, **kwargs):
+        ret = {'code': 200, 'msg': 'ok'}
         try:
             teacher_id = request.GET.get('teacher_id', -1)
 
-            task_list = list(set(models.Score.Objects.filter(teacher_id=teacher_id).values('task_id')))
+            task_list = [t['task_id'] for t in models.Score.objects.filter(teacher_id=teacher_id).values('task_id')]
+
+            print(task_list)
 
             data = models.Task.objects.filter(pk__in=task_list)
             ret['data'] = serializers.serialize('json', data)
 
         except Exception as e:
             ret = {'code': 500, 'msg': 'Timeout'}
+            ret = {'code': 500, 'msg': 'Timeout', 'error': str(e)}
 
         return JsonResponse(ret)
     
@@ -173,9 +176,12 @@ class StudentFromTaskByTeacher(APIView):
                 models.Score.objects.filter(task_id=task_id, teacher_id=teacher_id, student_id=score['student_id']).update(
                     **score
                 )
+                tice_tools.calc_all_score(task_id, score['student_id'])
+
 
         except Exception as e:
             ret = {'code': 500, 'msg': 'Timeout'}
+            ret = {'code': 500, 'msg': 'Timeout', 'error': str(e)}
 
         return JsonResponse(ret)
 
