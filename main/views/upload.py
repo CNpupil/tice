@@ -21,6 +21,7 @@ class UploadStudentInfomation(APIView):
             fileObj = models.TempFile.objects.create(file=file)
 
             student_basic_infomation.read_student_infomation(task_id, settings.MEDIA_ROOT + fileObj.file.name)
+            models.Task.objects.filter(pk=task_id).update(status=2)
             # print(fileObj.file)
 
         except Exception as e:

@@ -181,7 +181,8 @@ class Teacher(APIView):
                 uid = uid, 
                 password = tools.genearteMD5(uid),
                 name = name,
-                status = 1
+                status = 1,
+                auth = 2
             )
             models.TeacherInfomation.objects.create(
                 user_id = models.User.objects.filter(uid=uid).first().pk,

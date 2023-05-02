@@ -171,7 +171,7 @@ def calc_all_score(task_id, student_id):
         score.runlong_score = calc_score.calc_run800_score(score.run800)
     if score.run1000 and student.sex == 1:
         score.runlong_score = calc_score.calc_run1000_score(score.run1000)
-    if score.adbominal_curl and student == 2:
+    if score.adbominal_curl and student.sex == 2:
         score.curlorup_score = calc_score.calc_adbominal_curl_score(score.adbominal_curl)
     if score.pull_up and student.sex == 1:
         score.curlorup_score = calc_score.calc_pull_up_score(score.pull_up)

@@ -61,7 +61,7 @@ def save_data(students, task_id):
         item['brithday'] = tice_tools.birthday_to_timestamp(item['idcard'][6:14])
 
         user = models.User.objects.update_or_create(
-            defaults={'status': 1, 'name': item['name'], 'password': tools.genearteMD5(item['uid'])},
+            defaults={'status': 1, 'name': item['name'], 'password': tools.genearteMD5(item['uid']), 'auth': 3},
             uid = item['uid']
         )
 

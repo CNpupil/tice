@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from main.views.user import User, Login, Register, ChangePassword, Teacher
 from main.views.upload import UploadStudentInfomation, UploadStudentScore
-from main.views.task import Task, TaskList, DistributeTeacher, TaskByTeacher, StudentFromTaskByTeacher
+from main.views.task import Task, TaskList, DistributeTeacher, TaskByTeacher, StudentFromTaskByTeacher, TaskProgress
 from main.views.score import ScoreStandard, ScoreOnStudent
 
 
@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^distributeteacher$', DistributeTeacher.as_view()),
     url(r'^uploadstudentscore$', UploadStudentScore.as_view()),
     url(r'^scorestandard$', ScoreStandard.as_view()),
+    url(r'^taskprogress$', TaskProgress.as_view()),
     # user
     url(r'^teacher$', Teacher.as_view()),
     url(r'^login$', Login.as_view()),

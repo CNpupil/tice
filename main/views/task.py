@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from django.core import serializers
 from django.http import JsonResponse
+from django.db.models import Count, Q
 
 from main import models
 from main import tools, tice_tools
@@ -33,7 +34,7 @@ class Task(APIView):
                 name = data['name'],
                 begin_time = data['begin_time'],
                 end_time = data['end_time'],
-                status = 0,
+                status = 3,
                 year = data['year'],
                 half = data['half'],
             )            
@@ -117,6 +118,8 @@ class DistributeTeacher(APIView):
                 models.Score.objects.filter(pk__in=pks[begin:end]).update(teacher_id=teacher)
                 begin, end = end, min(end + member_count, len(scores))
 
+            models.Task.objects.filter(pk=task_id).update(status=1)
+
 
         except Exception as e:
             ret = {'code': 500, 'msg': 'Timeout'}
@@ -147,20 +150,28 @@ class TaskByTeacher(APIView):
 
 class StudentFromTaskByTeacher(APIView):
     def get(self, request, *args, **kwargs):
-        ret = {'code': 200, 'msg': '分配成功'}
+        ret = {'code': 200, 'msg': 'ok'}
         try:
             teacher_id = request.GET.get('teacher_id', -1)
             task_id = request.GET.get('task_id', -1)
+            search_key = request.GET.get('search_key', None)
+            search_value = request.GET.get('search_value', None)
 
             data = models.Score.objects.filter(
                 task_id = task_id,
                 teacher_id = teacher_id
             ).order_by('student_id')
+            if search_key:
+                search_key += '__icontains'
+                data = data.filter(**{search_key:search_value})
+
+            data, ret['page_count'] = tools.myPaginator(data, 20, request.GET.get('page_num', 1))
 
             ret['data'] = serializers.serialize('json', data, use_natural_foreign_keys=True)
 
         except Exception as e:
             ret = {'code': 500, 'msg': 'Timeout'}
+            print(str(e))
 
         return JsonResponse(ret)
 
@@ -185,3 +196,21 @@ class StudentFromTaskByTeacher(APIView):
 
         return JsonResponse(ret)
 
+
+class TaskProgress(APIView):
+    def get(self, request, *args, **kwargs):
+        ret = {'code': 200, 'msg': 'ok'}
+        try:
+            task_id = request.GET.get('task_id', -1)
+
+            data = models.Score.objects.values('teacher__name').annotate(
+                already_count=Count('end_score', filter=~Q(end_score=None)),
+                total_count=Count('id')
+            )   
+            ret['data'] = json.dumps(list(data))
+
+        except Exception as e:
+            ret = {'code': 500, 'msg': 'Timeout'}
+            print(str(e))
+
+        return JsonResponse(ret)
