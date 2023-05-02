@@ -35,6 +35,9 @@ class TeacherInfomation(models.Model):
     uid = models.CharField(max_length=50, unique=True, db_index=True, default='null')
     name = models.CharField(max_length=30, default='')
 
+    def natural_key(self):
+        return {'uid': self.uid, 'name': self.name}
+
 
 class StudentInfomation(models.Model):
     user = models.OneToOneField("main.User", on_delete=models.CASCADE)
@@ -50,6 +53,22 @@ class StudentInfomation(models.Model):
     address = models.TextField(default='')
     idcard = models.CharField(max_length=19, default='')
     nation = models.CharField(max_length=19, default='')
+
+    def natural_key(self):
+        data = {}
+        data['uid'] = self.uid
+        data['college'] = self.college
+        data['grade'] = self.grade
+        data['major'] = self.major
+        data['class_name'] = self.class_name
+        data['name'] = self.name
+        data['sex'] = self.sex
+        data['brithday'] = self.brithday
+        data['source'] = self.source
+        data['address'] = self.address
+        data['idcard'] = self.idcard
+        data['nation'] = self.nation
+        return data
 
 
 class Score(models.Model):

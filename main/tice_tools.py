@@ -62,13 +62,14 @@ def calc_tag(score):
         { 'value': 0, 'name': 'unqualified' },
     ]
     for t in standard_tag:
-        if score >= t.value:
-            return t.name
+        if score >= t['value']:
+            return t['name']
     return False
 
 def calc_tags_count(scores):
-    tags = {}
+    tags = {'excellent': 0, 'good': 0, 'qualified': 0, 'unqualified': 0}
     for score in scores:
+        score = score if score else 0
         grade_name = calc_tag(score)
         tags[grade_name] = tags.get(grade_name, 0) + 1
     return tags

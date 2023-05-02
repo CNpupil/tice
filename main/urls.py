@@ -2,7 +2,7 @@ from django.conf.urls import url
 from main.views.user import User, Login, Register, ChangePassword, Teacher
 from main.views.upload import UploadStudentInfomation, UploadStudentScore
 from main.views.task import Task, TaskList, DistributeTeacher, TaskByTeacher, StudentFromTaskByTeacher, TaskProgress
-from main.views.score import ScoreStandard, ScoreOnStudent
+from main.views.score import ScoreStandard, ScoreOnStudent, ScoreStatics, ScoreOnSearch, ClassInfomation
 
 
 urlpatterns = [
@@ -15,6 +15,9 @@ urlpatterns = [
     url(r'^uploadstudentscore$', UploadStudentScore.as_view()),
     url(r'^scorestandard$', ScoreStandard.as_view()),
     url(r'^taskprogress$', TaskProgress.as_view()),
+    url(r'^scorestatics$', ScoreStatics.as_view()),
+    url(r'^scoresearch$', ScoreOnSearch.as_view()),
+    url(r'^classinfomation$', ClassInfomation.as_view()),
     # user
     url(r'^teacher$', Teacher.as_view()),
     url(r'^login$', Login.as_view()),

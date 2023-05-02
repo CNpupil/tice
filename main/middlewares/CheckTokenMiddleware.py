@@ -14,7 +14,7 @@ class CheckTokenMiddleware(MiddlewareMixin):
         try:
             # return None
             path = request.path_info[1:]
-            if path in ['login', 'scorestandard', 'changepassword']:
+            if path in ['login', 'scorestandard', 'changepassword', 'register']:
                 return None
             
             auth_header = request.headers.get('Authorization', '').split()

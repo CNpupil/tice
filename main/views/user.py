@@ -103,7 +103,7 @@ class Register(APIView):
                 name = data['name'],
                 password = data['password'],
                 token = tools.generateString16(),
-                auth = 0,
+                auth = 1,
                 status = 0,
             )
 

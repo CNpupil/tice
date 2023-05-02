@@ -7,6 +7,7 @@ from main import tools, tice_tools
 
 import json
 
+
 class ScoreOnStudent(APIView):
     def get(self, request, *args, **kwargs):
         ret = {'code': 200, 'msg': 'ok'}
@@ -20,7 +21,6 @@ class ScoreOnStudent(APIView):
 
         except Exception as e:
             ret = {'code': 500, 'msg': 'Timeout'}
-            print(str(e))
 
         return JsonResponse(ret)
     
@@ -45,30 +45,35 @@ class ScoreOnTask(APIView):
 
 
 class ScoreOnSearch(APIView):
+    # 管理员查询任务的体测数据
     def get(self, request, *args, **kwargs):
         ret = {'code': 200, 'msg': 'ok'}
         try:
             task_id = request.GET.get('task_id', None)
             page_num = request.GET.get('page_num', 1)
-            key = request.GET.get('search_key', 'uid')
-            value = request.GET.get('value', '')
+            key = request.GET.get('search_key', None)
+            value = request.GET.get('search_value', '')
             if task_id is None:
                 return JsonResponse({'code': 400, 'msg': '任务id不能为空'})
             data = models.Score.objects.filter(
                 task_id=task_id,
-                **{key: value}
             ).order_by('pk')
+            if key:
+                key += '__icontains'
+                data = data.filter(**{key: value})
             data, ret['page_count'] = tools.myPaginator(data, 20, page_num)
             data = serializers.serialize('json', data)
             ret['data'] = data
 
         except Exception as e:
             ret = {'code': 500, 'msg': 'Timeout'}
+            print(str(e))
 
         return JsonResponse(ret)
     
 
 class ScoreStatics(APIView):
+    # 单个任务的成绩统计
     def get(self, request, *args, **kwargs):
         ret = {'code': 200, 'msg': 'ok'}
         try:
@@ -154,5 +159,20 @@ class ScoreStandard(APIView):
 
         except Exception as e:
             ret = {'code': 500, 'msg': 'Timeout'}
+
+        return JsonResponse(ret)
+    
+
+class ClassInfomation(APIView):
+    # 获取一个项目的评分标准
+    def get(self, request, *args, **kwargs):
+        ret = {'code': 200, 'msg': 'ok'}
+        try:
+            data = models.ClassInfomation.objects.all()
+            ret['data'] = serializers.serialize('json', data)
+
+        except Exception as e:
+            ret = {'code': 500, 'msg': 'Timeout'}
+            ret = {'code': 500, 'msg': 'Timeout', 'error': str(e)}
 
         return JsonResponse(ret)
