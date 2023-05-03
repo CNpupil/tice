@@ -11,6 +11,9 @@ class User(models.Model):
     # 0 loading, 1 normal, 2 delete
     status = models.IntegerField(default=0)
 
+    def natural_key(self):
+        return {'name': self.name, 'auth': self.name, 'status': self.status}
+
 
 class Token(models.Model):
     value = models.CharField(max_length=50, unique=True, db_index=True, default='null')

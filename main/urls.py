@@ -23,7 +23,7 @@ urlpatterns = [
     url(r'^login$', Login.as_view()),
     url(r'^register$', Register.as_view()),
     url(r'^changepassword$', ChangePassword.as_view()),
-    # teacher
+    # teacher   
     url(r'^taskbyteacher$', TaskByTeacher.as_view()),
     url(r'^studentfromtaskbyteacher$', StudentFromTaskByTeacher.as_view()),
     # student

@@ -195,3 +195,44 @@ class Teacher(APIView):
             ret = {'code': 500, 'msg': 'Timeout', 'error': str(e)}
 
         return JsonResponse(ret)
+
+
+class Student(APIView):
+    def get(self, request, *args, **kwargs):
+        ret = {'code': 200, 'msg': 'ok'}
+        try:
+            key = request.GET.get('search_key', None)
+            value = request.GET.get('search_value', None)
+
+            students = models.StudentInfomation.objects.order_by('uid')
+            if key:
+                key += '__icontains'
+                students = students.filter(**{key: value})
+            data = serializers.serialize('json', students)
+            data, ret['page_count'] = tools.myPaginator(data, 20, request.GET.get('page_num', 1))
+            ret['data'] = serializers.serialize('json', data, use_natural_foreign_keys=True)
+
+        except Exception as e:
+            ret = {'code': 500, 'msg': 'Timeout'}
+            ret = {'code': 500, 'msg': 'Timeout', 'error': str(e)}
+
+        return JsonResponse(ret)
+    
+    def put(self, request, *args, **kwargs):
+        ret = {'code': 200, 'msg': 'ok'}
+        try:
+            data = json.loads(request.body).get('data', {})
+            key = data.get('key', '')
+            value = data.get('value', '')
+            student = models.StudentInfomation.objects.filter(uid=data.get('uid', ''))
+            if student.count() == 0:
+                return JsonResponse({'code': 400, 'msg': '该学生不存在'})
+            student.update(
+                **{key: value}
+            )
+
+        except Exception as e:
+            ret = {'code': 500, 'msg': 'Timeout'}
+            ret = {'code': 500, 'msg': 'Timeout', 'error': str(e)}
+
+        return JsonResponse(ret)

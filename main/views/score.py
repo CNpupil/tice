@@ -164,7 +164,7 @@ class ScoreStandard(APIView):
     
 
 class ClassInfomation(APIView):
-    # 获取一个项目的评分标准
+    # 获取全校的班级信息
     def get(self, request, *args, **kwargs):
         ret = {'code': 200, 'msg': 'ok'}
         try:

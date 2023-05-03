@@ -34,12 +34,12 @@ def birthday_to_timestamp(value):
     timestamp = datetime.timestamp(date_obj)   
     return timestamp 
 
-grading = [
-    {'value': 100, 'score': 100}, 
-    {'value': 80, 'score': 80}, 
-    {'value': 70, 'score': 70}, 
-    {'value': 0, 'score': 10}
-]
+# grading = [
+#     {'value': 100, 'score': 100}, 
+#     {'value': 80, 'score': 80}, 
+#     {'value': 70, 'score': 70}, 
+#     {'value': 0, 'score': 10}
+# ]
 def calc_item_score(value, grading, order=True):
     for t in grading:
         res = value >= t['value'] if order else value <= t['value']
