@@ -72,29 +72,55 @@ class ScoreOnSearch(APIView):
         return JsonResponse(ret)
     
 
+# class ScoreStatics(APIView):
+#     # 单个任务的成绩统计
+#     def get(self, request, *args, **kwargs):
+#         ret = {'code': 200, 'msg': 'ok'}
+#         try:
+#             task_id = request.GET.get('task_id', None)
+#             if task_id is None:
+#                 return JsonResponse({'code': 400, 'msg': '任务id不能为空'})
+#             scores = models.Score.objects.filter(task_id=task_id)
+
+#             # 计算新生年级
+#             task = models.Task.objects.filter(pk=task_id).first()
+#             freshman_grade = task.year
+#             if task.half == 1:
+#                 freshman_grade = task.year - 1
+
+#             # 拿出全部end_score去统计
+#             end_score_list = [t['end_score'] for t in scores.values('end_score')]
+#             tag_statics =  tice_tools.calc_tags_count(end_score_list)
+#             ret['data'] = tag_statics
+
+#         except Exception as e:
+#             ret = {'code': 500, 'msg': 'Timeout'}
+
+#         return JsonResponse(ret)
+    
+
 class ScoreStatics(APIView):
     # 单个任务的成绩统计
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         ret = {'code': 200, 'msg': 'ok'}
         try:
-            task_id = request.GET.get('task_id', None)
+            data = json.loads(request.body).get('data', {})
+            task_id = data.get('task_id', None)
+            items = data.get('items', [])
+            statics_names = data.get('statics_names', [])
             if task_id is None:
                 return JsonResponse({'code': 400, 'msg': '任务id不能为空'})
-            scores = models.Score.objects.filter(task_id=task_id)
-
-            # 计算新生年级
-            task = models.Task.objects.filter(pk=task_id).first()
-            freshman_grade = task.year
-            if task.half == 1:
-                freshman_grade = task.year - 1
-
-            # 拿出全部end_score去统计
-            end_score_list = [t['end_score'] for t in scores.values('end_score')]
-            tag_statics =  tice_tools.calc_tags_count(end_score_list)
-            ret['data'] = tag_statics
+            data = {}
+            for item in items:
+                data[item] = {}
+                for statics_name in statics_names:
+                    data[item][statics_name] = tice_tools.calc_item_statics(task_id, item, statics_name)
+            
+            ret['data'] = json.dumps(data)
 
         except Exception as e:
             ret = {'code': 500, 'msg': 'Timeout'}
+            ret = {'code': 500, 'msg': 'Timeout', 'error': str(e)}
 
         return JsonResponse(ret)
     

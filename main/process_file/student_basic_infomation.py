@@ -1,6 +1,4 @@
 from openpyxl import load_workbook
-import pymysql
-import sys
 from main import tice_tools, models, tools
 
 

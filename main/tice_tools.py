@@ -47,13 +47,13 @@ def calc_item_score(value, grading, order=True):
             return t['score']
     return 0
 
-scores = [{'name': 88}, ]
-weights = {'bmi': 0.15, 'pulmonary': 0.15, 'run50': 0.2, 'jump': 0.1, 'flexion': 0.1, 'runlong': 0.2, 'curlorup': 0.1}
+# scores = [{'name': 88}, ]
+# weights = {'bmi': 0.15, 'pulmonary': 0.15, 'run50': 0.2, 'jump': 0.1, 'flexion': 0.1, 'runlong': 0.2, 'curlorup': 0.1}
 def calc_end_score(scores, weights):
     end_score = sum([(getattr(scores, key+'_score') if getattr(scores, key+'_score') else 0) * weights[key] for key in weights.keys()])
     return end_score
 
-scores = [99, 22]
+# scores = [99, 22]
 def calc_tag(score):
     standard_tag = [
         { 'value': 90, 'name': 'excellent' },
@@ -179,3 +179,39 @@ def calc_all_score(task_id, student_id):
     score.end_score = calc_score.calc_end_score(score)
 
     score.save()
+
+
+# 返回中位数
+import heapq
+def find_median(lst):
+    length = len(lst)
+    if length % 2 == 0:
+        mid1 = heapq.nlargest(length // 2, lst)[-1]
+        mid2 = heapq.nsmallest(length // 2, lst)[-1]
+        median = (mid1 + mid2) / 2
+    else:
+        median = heapq.nlargest(length // 2 + 1, lst)[-1]
+    return median
+
+# 计算单个项目的单个统计数据，比如jump的min
+def calc_item_statics(task_id, item, statics_name):
+    scores = Score.objects.filter(task_id=task_id).values(item)
+    scores = list(t[item] if t[item] else 0 for t in scores)
+    if statics_name == 'min':
+        return min(scores)
+    elif statics_name == 'max':
+        return max(scores)
+    elif statics_name == 'ave':
+        return sum(scores) / len(scores)
+    elif statics_name == 'median':
+        return find_median(scores)
+    elif statics_name == 'excellent':
+        return calc_tags_count(scores)[statics_name] / len(scores)
+    elif statics_name == 'good':
+        return calc_tags_count(scores)[statics_name] / len(scores)
+    elif statics_name == 'qualified':
+        return calc_tags_count(scores)[statics_name] / len(scores)
+    elif statics_name == 'unqualified':
+        return calc_tags_count(scores)[statics_name] / len(scores)
+    return None
+    

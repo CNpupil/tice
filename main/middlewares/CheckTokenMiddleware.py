@@ -14,7 +14,7 @@ class CheckTokenMiddleware(MiddlewareMixin):
         try:
             # return None
             path = request.path_info[1:]
-            if 'admin' in path:
+            if 'admin' or 'media' in path:
                 return None
             if path in ['login', 'scorestandard', 'changepassword', 'register']:
                 return None

@@ -59,6 +59,7 @@ class StudentInfomation(models.Model):
 
     def natural_key(self):
         data = {}
+        data['pk'] = self.id
         data['uid'] = self.uid
         data['college'] = self.college
         data['grade'] = self.grade
@@ -77,18 +78,18 @@ class StudentInfomation(models.Model):
 class Score(models.Model):
     task = models.ForeignKey("main.Task", models.CASCADE)
     student = models.ForeignKey("main.StudentInfomation", models.CASCADE)
-    height = models.DecimalField(max_digits=6, decimal_places=2, null=True)
-    weight = models.DecimalField(max_digits=6, decimal_places=2, null=True)
+    height = models.FloatField(null=True)
+    weight = models.FloatField(null=True)
     pulmonary = models.IntegerField(null=True)
-    run50 = models.DecimalField(max_digits=6, decimal_places=2, null=True)
-    jump = models.DecimalField(max_digits=6, decimal_places=2, null=True)
-    flexion = models.DecimalField(max_digits=6, decimal_places=2, null=True)
+    run50 = models.FloatField(null=True)
+    jump = models.FloatField(null=True)
+    flexion = models.FloatField(null=True)
     run800 = models.IntegerField(null=True)
     run1000 = models.IntegerField(null=True)
     adbominal_curl = models.IntegerField(null=True)
     pull_up = models.IntegerField(null=True)
-    left_eye = models.DecimalField(max_digits=6, decimal_places=2, null=True)
-    right_eye = models.DecimalField(max_digits=6, decimal_places=2, null=True)
+    left_eye = models.FloatField(null=True)
+    right_eye = models.FloatField(null=True)
 
     bmi_score = models.IntegerField(null=True)
     pulmonary_score = models.IntegerField(null=True)
