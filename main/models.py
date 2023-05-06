@@ -6,7 +6,7 @@ class User(models.Model):
     name = models.CharField(max_length=50, default='null')
     password = models.CharField(max_length=50, default='null')
     # email = models.CharField(max_length=50, default='null', unique=True, db_index=True,)
-    token = models.CharField(max_length=50, default='null')
+    token = models.TextField(default='null')
     auth = models.IntegerField(default=0)
     # 0 loading, 1 normal, 2 delete
     status = models.IntegerField(default=0)

@@ -84,9 +84,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'tice',
-        'USER': 'lly',
+        'USER': 'tice',
         'PASSWORD': 'Loko5284',
-        'HOST':'liliyu-tice.rwlb.cn-chengdu.rds.aliyuncs.com',
+        'HOST':'192.168.0.175',
         'PORT':'3306',
     }
 }

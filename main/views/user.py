@@ -139,6 +139,7 @@ class Login(APIView):
                 'auth': user.auth,
             }
             user.token = jwt.encode(payload, settings.JWT_SECRET_KEY, algorithm=settings.JWT_ALGORITHM)
+            print(1)
             user.save()
 
             cache.set(user.token, tools.getNowTimeStamp() + settings.JWT_EXPIRATION_DELTA, timeout=settings.JWT_EXPIRATION_DELTA)
@@ -149,7 +150,7 @@ class Login(APIView):
 
         except Exception as e:
             ret = {'code': 500, 'msg': 'Timeout'}
-            # ret = {'code': 500, 'msg': str(e)}
+            ret = {'code': 500, 'msg': str(e)}
 
         return JsonResponse(ret)
     
