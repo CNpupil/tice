@@ -52,8 +52,45 @@ class ExportTaskStandardData(APIView):
                 'left_eye',
                 'right_eye',
             )
-            ret['filename'] = write_data_to_file(data, tools.generateString16())
+            ret['filename'] = write_data_to_file(list(data), tools.generateString16())
             # ret['data'] = json.dumps(list(data))
+
+        except Exception as e:
+            ret = {'code': 500, 'msg': 'Timeout'}
+            print(str(e))
+
+        return JsonResponse(ret)
+    
+
+class ExportStudentFromTaskByTeacher(APIView):
+    def get(self, request, *args, **kwargs):
+        ret = {'code': 200, 'msg': 'ok'}
+        try:
+            teacher_id = request.GET.get('teacher_id', -1)
+            task_id = request.GET.get('task_id', -1)
+
+            data = models.Score.objects.filter(
+                task_id = task_id,
+                teacher_id = teacher_id
+            ).order_by('student_id').values(
+                'student__uid',
+                'student__name',
+                'student__sex',
+                'height',
+                'weight',
+                'pulmonary',
+                'run50',
+                'jump',
+                'flexion',
+                'run800',
+                'run1000',
+                'adbominal_curl',
+                'pull_up',
+                'left_eye',
+                'right_eye',
+            )
+            ret['filename'] = write_data_to_file(list(data), tools.generateString16())
+
 
         except Exception as e:
             ret = {'code': 500, 'msg': 'Timeout'}

@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from django.core import serializers
 from django.http import JsonResponse
 from django.core.cache import cache
+from django.db.models import F
 
 from main import models
 from main import tools
@@ -137,9 +138,9 @@ class Login(APIView):
             payload = {
                 'uid': user.id,
                 'auth': user.auth,
+                'create_time': tools.getNowTimeStamp()
             }
             user.token = jwt.encode(payload, settings.JWT_SECRET_KEY, algorithm=settings.JWT_ALGORITHM)
-            print(1)
             user.save()
 
             cache.set(user.token, tools.getNowTimeStamp() + settings.JWT_EXPIRATION_DELTA, timeout=settings.JWT_EXPIRATION_DELTA)
@@ -160,7 +161,7 @@ class Teacher(APIView):
         ret = {'code': 200, 'msg': 'ok'}
         try:
             teachers = models.TeacherInfomation.objects.all().order_by('pk')
-            ret['data'] = serializers.serialize('json', teachers)
+            ret['data'] = serializers.serialize('json', teachers, use_natural_foreign_keys=True)
 
         except Exception as e:
             ret = {'code': 500, 'msg': 'Timeout'}
@@ -209,8 +210,8 @@ class Student(APIView):
             if key:
                 key += '__icontains'
                 students = students.filter(**{key: value})
-            data = serializers.serialize('json', students)
-            data, ret['page_count'] = tools.myPaginator(data, 20, request.GET.get('page_num', 1))
+            # data = serializers.serialize('json', students)
+            data, ret['page_count'] = tools.myPaginator(students, 20, request.GET.get('page_num', 1))
             ret['data'] = serializers.serialize('json', data, use_natural_foreign_keys=True)
 
         except Exception as e:
@@ -232,6 +233,21 @@ class Student(APIView):
                 **{key: value}
             )
 
+        except Exception as e:
+            ret = {'code': 500, 'msg': 'Timeout'}
+            ret = {'code': 500, 'msg': 'Timeout', 'error': str(e)}
+
+        return JsonResponse(ret)
+    
+
+class ResetPassword(APIView):
+    def put(self, request, *args, **kwargs):
+        ret = {'code': 200, 'msg': '重置成功'}
+        try:
+            uid = json.loads(request.body).get('uid', -1)
+            models.User.objects.filter(uid=uid).update(
+                password = tools.genearteMD5(uid)
+            )
         except Exception as e:
             ret = {'code': 500, 'msg': 'Timeout'}
             ret = {'code': 500, 'msg': 'Timeout', 'error': str(e)}

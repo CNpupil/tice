@@ -13,6 +13,9 @@ class User(models.Model):
 
     def natural_key(self):
         return {'name': self.name, 'auth': self.name, 'status': self.status}
+    
+    def __str__(self):
+        return self.uid
 
 
 class Token(models.Model):
