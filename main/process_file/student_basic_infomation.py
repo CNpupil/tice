@@ -57,23 +57,25 @@ def save_data(students, task_id):
         item['nation'] = student[name_index['nation']['idx']]
         # convert to timestamp
         item['brithday'] = tice_tools.birthday_to_timestamp(item['idcard'][6:14])
-
-        user = models.User.objects.update_or_create(
-            defaults={'status': 1, 'name': item['name'], 'password': tools.genearteMD5(item['uid']), 'auth': 3},
-            uid = item['uid']
-        )
-
-        item['user_id'] = models.User.objects.filter(uid=item['uid']).first().pk
-        models.StudentInfomation.objects.update_or_create(
-            defaults=item,
-            uid = item['uid']
-        )
-        student_pk = models.StudentInfomation.objects.filter(uid=item['uid']).first().pk
-        if models.Score.objects.filter(task_id=task_id, student_id=student_pk).count() == 0:
-            models.Score.objects.create(
-                student_id = student_pk,
-                task_id = task_id
+        try:
+            user = models.User.objects.update_or_create(
+                defaults={'status': 1, 'name': item['name'], 'password': tools.genearteMD5(item['uid']), 'auth': 3},
+                uid = item['uid']
             )
+
+            item['user_id'] = models.User.objects.filter(uid=item['uid']).first().pk
+            models.StudentInfomation.objects.update_or_create(
+                defaults=item,
+                uid = item['uid']
+            )
+            student_pk = models.StudentInfomation.objects.filter(uid=item['uid']).first().pk
+            if models.Score.objects.filter(task_id=task_id, student_id=student_pk).count() == 0:
+                models.Score.objects.create(
+                    student_id = student_pk,
+                    task_id = task_id
+                )
+        except Exception as e:
+            raise Exception('ppp请检查学号为{}的数据是否规范'.format(item['uid']))
 
 def read_class(students):
     class_infomation = []

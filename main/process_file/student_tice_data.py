@@ -34,26 +34,29 @@ def preprocess_data(students):
 
 def save_data(students, task_id):
     for student in students:
-        # validate data
-        item = {}
-        item['task_id'] = task_id
-        item['student_id'] = student[name_index['uid']['idx']]
-        for i in name_index.keys():
-            item[i] = student[name_index[i]['idx']]
-        
-        item['sex'] = 1 if student[name_index['sex']['idx']] == '男' else 2
-        if item['sex'] == 2:
-            item['run800'] = tice_tools.time_to_int(student[name_index['run800']['idx']])
-        else:
-            item['run1000'] = tice_tools.time_to_int(student[name_index['run1000']['idx']])
-        student = models.StudentInfomation.objects.filter(uid=item['student_id']).first()
-        item['student_id'] = student.pk
-        models.Score.objects.update_or_create(
-            defaults = item,
-            task_id = item['task_id'],
-            student_id = student.pk,
-        )
-        tice_tools.calc_all_score(task_id, student.pk)
+        try:
+            # validate data
+            item = {}
+            item['task_id'] = task_id
+            item['student_id'] = student[name_index['uid']['idx']]
+            for i in name_index.keys():
+                item[i] = student[name_index[i]['idx']]
+            
+            item['sex'] = 1 if student[name_index['sex']['idx']] == '男' else 2
+            if item['sex'] == 2:
+                item['run800'] = tice_tools.time_to_int(student[name_index['run800']['idx']])
+            else:
+                item['run1000'] = tice_tools.time_to_int(student[name_index['run1000']['idx']])
+            student = models.StudentInfomation.objects.filter(uid=item['student_id']).first()
+            item['student_id'] = student.pk
+            models.Score.objects.update_or_create(
+                defaults = item,
+                task_id = item['task_id'],
+                student_id = student.pk,
+            )
+            tice_tools.calc_all_score(task_id, student.pk)
+        except Exception as e:
+            raise Exception('ppp请检查学号为{}的数据是否规范'.format(student.uid))
 
 def read_student_score(task_id, filename):
     students = read_data_from_excel(filename)

@@ -25,7 +25,6 @@ def write_data_to_file(data, filename):
     for item in data:
         for key, value in projetcts.items():
             if item.get(key, 'pp') != 'pp':
-                print(key)
                 item[value] = item[key]
                 del item[key]
     df = pd.DataFrame(data)
