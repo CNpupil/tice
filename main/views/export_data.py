@@ -21,7 +21,8 @@ class ExportTaskData(APIView):
             data = models.Score.objects.filter(task_id=task_id).values(
                 * items
             )
-            ret['data'] = json.dumps(list(data))
+            # ret['data'] = json.dumps(list(data))
+            ret['filename'] = write_data_to_file(list(data), tools.generateString16())
 
         except Exception as e:
             ret = {'code': 500, 'msg': 'Timeout'}

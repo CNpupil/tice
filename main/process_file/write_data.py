@@ -28,7 +28,6 @@ def write_data_to_file(data, filename):
                 print(key)
                 item[value] = item[key]
                 del item[key]
-    print(data)
     df = pd.DataFrame(data)
     df.to_excel(settings.MEDIA_ROOT +  filename + '.xlsx', index=False, engine='openpyxl')
     return filename + '.xlsx'
