@@ -7,3 +7,4 @@ from main import models
 admin.site.register(models.StudentInfomation)
 admin.site.register(models.User)
 admin.site.register(models.ScoreStandard)
+admin.site.register(models.Task)

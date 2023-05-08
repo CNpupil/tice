@@ -56,7 +56,8 @@ def save_data(students, task_id):
             )
             tice_tools.calc_all_score(task_id, student.pk)
         except Exception as e:
-            raise Exception('ppp请检查学号为{}的数据是否规范'.format(student.uid))
+            print(str(e))
+            raise Exception('ppp请检查学号为{}的数据是否规范'.format(item['student_id']))
 
 def read_student_score(task_id, filename):
     students = read_data_from_excel(filename)

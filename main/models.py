@@ -33,7 +33,13 @@ class Task(models.Model):
     half = models.IntegerField(default=0)
 
     def natural_key(self):
-        return {'name': self.name, 'year': self.year, 'half': self.half}
+        return {
+            'name': self.name, 
+            'year': self.year, 
+            'half': self.half,
+            'begin_time': self.begin_time,
+            'end_time': self.end_time,
+        }
 
 
 class TeacherInfomation(models.Model):

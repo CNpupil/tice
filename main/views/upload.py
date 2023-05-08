@@ -48,8 +48,9 @@ class UploadStudentScore(APIView):
             # print(fileObj.file)
 
         except Exception as e:
+            print(str(e))
             if str(e)[:3] == 'ppp':
-                ret = {'code': 500, 'msg': str(e)}
+                ret = {'code': 500, 'msg': str(e).replace('ppp', '')}
             else:
                 ret = {'code': 500, 'msg': 'Timeout'}
 

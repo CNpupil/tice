@@ -50,14 +50,18 @@ class Task(APIView):
         try:
             data = json.loads(request.body).get('data', {})
 
-            if None in [data.get('key', None), data.get('value', None)]:
-                return JsonResponse({'code': 400, 'msg': '参数错误'})
-
-            task = models.Task.objects.filter(pk=data.get('task_pk', 0)).first()
-            if task is None:
-                return JsonResponse({'code': 400, 'msg': '任务不存在'})
-            setattr(task, data['key'], data['value']) 
-            task.save()           
+            task_id = data.get('task_id')
+            task = models.Task.objects.filter(pk=task_id)
+            if task.count() == 0:
+                return JsonResponse({'code': 400, 'msg': '该任务不存在'})
+            
+            task.update(
+                name = data.get('name', ''),
+                begin_time = data.get('begin_time', 0),
+                end_time = data.get('end_time', 0),
+                year = data.get('year', 1977),
+                half = data.get('half', 0),
+            )
 
         except Exception as e:
             ret = {'code': 500, 'msg': 'Timeout'}
@@ -156,10 +160,18 @@ class StudentFromTaskByTeacher(APIView):
             task_id = request.GET.get('task_id', -1)
             search_key = request.GET.get('search_key', None)
             search_value = request.GET.get('search_value', None)
+            grade = request.GET.get('grade', None)
+            college = request.GET.get('college', None)
+            major = request.GET.get('major', None)
+            class_name = request.GET.get('class_name', None)
 
             data = models.Score.objects.filter(
                 task_id = task_id,
-                teacher_id = teacher_id
+                teacher_id = teacher_id,
+                student__grade = grade,
+                student__college = college,
+                student__major = major,
+                student__class_name = class_name,
             ).order_by('student_id')
             if search_key:
                 search_key += '__icontains'
@@ -171,7 +183,6 @@ class StudentFromTaskByTeacher(APIView):
 
         except Exception as e:
             ret = {'code': 500, 'msg': 'Timeout'}
-            print(str(e))
 
         return JsonResponse(ret)
 

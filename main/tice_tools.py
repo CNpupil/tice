@@ -26,6 +26,8 @@ def time_to_int(value):
     return a * 60 + b
 
 def int_to_time(value):
+    if value is None:
+        value = 0
     a, b = value // 60, value % 60
     return "{}'{}".format(a, b)
 
