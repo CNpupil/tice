@@ -160,18 +160,17 @@ class StudentFromTaskByTeacher(APIView):
             task_id = request.GET.get('task_id', -1)
             search_key = request.GET.get('search_key', None)
             search_value = request.GET.get('search_value', None)
-            grade = request.GET.get('grade', None)
-            college = request.GET.get('college', None)
-            major = request.GET.get('major', None)
-            class_name = request.GET.get('class_name', None)
+
+            items = {'grade', 'college', 'major', 'class_name'}
+            filter_criteria = {}
+            for item in items:
+                if request.GET.get(item, None):
+                    filter_criteria['student__' + item] = request.GET.get(item)
 
             data = models.Score.objects.filter(
                 task_id = task_id,
                 teacher_id = teacher_id,
-                student__grade = grade,
-                student__college = college,
-                student__major = major,
-                student__class_name = class_name,
+                ** filter_criteria
             ).order_by('student_id')
             if search_key:
                 search_key += '__icontains'

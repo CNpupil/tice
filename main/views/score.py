@@ -48,42 +48,6 @@ class ScoreOnStudent(APIView):
         return JsonResponse(ret)
     
 
-class ScoreItemOnStudent(APIView):
-    def get(self, request, *args, **kwargs):
-        ret = {'code': 200, 'msg': 'ok'}
-        try:
-            uid = request.GET.get('uid', None)
-            if uid is None:
-                return JsonResponse({'code': 400, 'msg': '学号不能为空'})
-            data = models.Score.objects.filter(student__uid=uid).order_by('pk')
-
-            tables = []
-            for score in data:
-                table = []
-                tables.append(consruct_item('bmi', '{}, {}'.format(score['height'], score['weight']), score['bmi_score']))
-                table.append(consruct_item('肺活量', score['pulmonary'], score['pulmonary_score']))
-                table.append(consruct_item('坐位体前屈', score['jump'], score['jump_score']))
-                table.append(consruct_item('跳远', score['jump'], score['jump_score']))
-                table.append(consruct_item('50m', score['run50'], score['run50_score']))
-                # 1000m
-                table.append(consruct_item('800m/1000m', score['800'] , score['runlong']))
-                # pull_up
-                table.append(consruct_item('仰卧起坐/引体向上', score['adbominal_curl'], score['curlorup_score']))
-                table.append(consruct_item('左眼视力', score['left_eye'], None))
-                table.append(consruct_item('右眼视力', score['right_eye'], None))
-                table.append(consruct_item('最终分数', score['right_eye'], None))
-                table.append(consruct_item('等级', score['right_eye'], None))
-                tables.append(table)
-                
-            data = serializers.serialize('json', data, use_natural_foreign_keys=True)
-            ret['data'] = data
-
-        except Exception as e:
-            ret = {'code': 500, 'msg': 'Timeout'}
-
-        return JsonResponse(ret)
-    
-
 class ScoreOnTask(APIView):
     def get(self, request, *args, **kwargs):
         ret = {'code': 200, 'msg': 'ok'}
@@ -108,25 +72,30 @@ class ScoreOnSearch(APIView):
     def get(self, request, *args, **kwargs):
         ret = {'code': 200, 'msg': 'ok'}
         try:
-            task_id = request.GET.get('task_id', None)
-            page_num = request.GET.get('page_num', 1)
-            key = request.GET.get('search_key', None)
-            value = request.GET.get('search_value', '')
-            if task_id is None:
-                return JsonResponse({'code': 400, 'msg': '任务id不能为空'})
+            task_id = request.GET.get('task_id', -1)
+            search_key = request.GET.get('search_key', None)
+            search_value = request.GET.get('search_value', None)
+
+            items = {'grade', 'college', 'major', 'class_name'}
+            filter_criteria = {}
+            for item in items:
+                if request.GET.get(item, None):
+                    filter_criteria['student__' + item] = request.GET.get(item)
+
             data = models.Score.objects.filter(
-                task_id=task_id,
-            ).order_by('pk')
-            if key:
-                key += '__icontains'
-                data = data.filter(**{key: value})
-            data, ret['page_count'] = tools.myPaginator(data, 20, page_num)
-            data = serializers.serialize('json', data)
-            ret['data'] = data
+                task_id = task_id,
+                ** filter_criteria
+            ).order_by('student_id')
+            if search_key:
+                search_key += '__icontains'
+                data = data.filter(**{search_key:search_value})
+
+            data, ret['page_count'] = tools.myPaginator(data, 20, request.GET.get('page_num', 1))
+
+            ret['data'] = serializers.serialize('json', data, use_natural_foreign_keys=True)
 
         except Exception as e:
             ret = {'code': 500, 'msg': 'Timeout'}
-            print(str(e))
 
         return JsonResponse(ret)
     

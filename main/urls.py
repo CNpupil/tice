@@ -2,6 +2,7 @@ from django.conf.urls import url, re_path
 from tice import settings
 from django.views.static import serve
 from main.views.user import User, Login, Register, ChangePassword, Teacher, Student, ResetPassword
+from main.views.user import UpdateStudentStatus, UpdateTeacherStatus
 from main.views.upload import UploadStudentInfomation, UploadStudentScore
 from main.views.task import Task, TaskList, DistributeTeacher, TaskByTeacher, StudentFromTaskByTeacher, TaskProgress
 from main.views.score import ScoreStandard, ScoreOnStudent, ScoreStatics, ScoreOnSearch, ClassInfomation
@@ -34,6 +35,8 @@ urlpatterns = [
     url(r'^register$', Register.as_view()),
     url(r'^changepassword$', ChangePassword.as_view()),
     url(r'^resetpassword$', ResetPassword.as_view()),
+    url(r'^updateteacherstatus$', UpdateTeacherStatus.as_view()),
+    url(r'^updatestudentstatus$', UpdateStudentStatus.as_view()),
     # teacher   
     url(r'^taskbyteacher$', TaskByTeacher.as_view()),
     url(r'^studentfromtaskbyteacher$', StudentFromTaskByTeacher.as_view()),

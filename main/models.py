@@ -40,6 +40,9 @@ class Task(models.Model):
             'begin_time': self.begin_time,
             'end_time': self.end_time,
         }
+    
+    def __str__(self):
+        return self.name
 
 
 class TeacherInfomation(models.Model):
@@ -49,6 +52,9 @@ class TeacherInfomation(models.Model):
 
     def natural_key(self):
         return {'uid': self.uid, 'name': self.name}
+    
+    def __str__(self):
+        return self.uid
 
 
 class StudentInfomation(models.Model):
@@ -82,6 +88,9 @@ class StudentInfomation(models.Model):
         data['idcard'] = self.idcard
         data['nation'] = self.nation
         return data
+    
+    def __str__(self):
+        return self.uid
 
 
 class Score(models.Model):

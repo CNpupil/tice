@@ -197,6 +197,25 @@ class Teacher(APIView):
             ret = {'code': 500, 'msg': 'Timeout', 'error': str(e)}
 
         return JsonResponse(ret)
+    
+    def put(self, request, *args, **kwargs):
+        ret = {'code': 200, 'msg': 'ok'}
+        try:
+            data = json.loads(request.body).get('data', {})
+            key = data.get('key', '')
+            value = data.get('value', '')
+            teacher = models.TeacherInfomation.objects.filter(uid=data.get('uid', ''))
+            if teacher.count() == 0:
+                return JsonResponse({'code': 400, 'msg': '该教师不存在'})
+            teacher.update(
+                **{key: value}
+            )
+
+        except Exception as e:
+            ret = {'code': 500, 'msg': 'Timeout'}
+            ret = {'code': 500, 'msg': 'Timeout', 'error': str(e)}
+
+        return JsonResponse(ret)
 
 
 class Student(APIView):
@@ -221,7 +240,7 @@ class Student(APIView):
         return JsonResponse(ret)
     
     def put(self, request, *args, **kwargs):
-        ret = {'code': 200, 'msg': 'ok'}
+        ret = {'code': 200, 'msg': '修改成功'}
         try:
             data = json.loads(request.body).get('data', {})
             key = data.get('key', '')
@@ -231,6 +250,52 @@ class Student(APIView):
                 return JsonResponse({'code': 400, 'msg': '该学生不存在'})
             student.update(
                 **{key: value}
+            )
+
+        except Exception as e:
+            ret = {'code': 500, 'msg': 'Timeout'}
+            ret = {'code': 500, 'msg': 'Timeout', 'error': str(e)}
+
+        return JsonResponse(ret)
+    
+
+class UpdateTeacherStatus(APIView):
+    def put(self, request, *args, **kwargs):
+        ret = {'code': 200, 'msg': '修改成功'}
+        try:
+            data = json.loads(request.body).get('data', {})
+            uid = data.get('uid', '')
+            value = data.get('value', 0)
+
+            teacher = models.TeacherInfomation.objects.filter(uid=uid)
+            if teacher.count() == 0:
+                return JsonResponse({'code': 400, 'msg': '该教师不存在'})
+            
+            models.User.objects.filter(uid=uid).update(
+                status = value
+            )
+
+        except Exception as e:
+            ret = {'code': 500, 'msg': 'Timeout'}
+            ret = {'code': 500, 'msg': 'Timeout', 'error': str(e)}
+
+        return JsonResponse(ret)
+    
+
+class UpdateStudentStatus(APIView):
+    def put(self, request, *args, **kwargs):
+        ret = {'code': 200, 'msg': '修改成功'}
+        try:
+            data = json.loads(request.body).get('data', {})
+            uid = data.get('uid', '')
+            value = data.get('value', 0)
+
+            student = models.StudentInfomation.objects.filter(uid=uid)
+            if student.count() == 0:
+                return JsonResponse({'code': 400, 'msg': '该学生不存在'})
+            
+            models.User.objects.filter(uid=uid).update(
+                status = value
             )
 
         except Exception as e:
