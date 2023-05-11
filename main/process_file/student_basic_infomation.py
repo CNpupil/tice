@@ -44,7 +44,7 @@ def save_data(students, task_id):
         item = {}
         item['uid'] = student[name_index['uid']['idx']]
         item['name'] = student[name_index['name']['idx']]
-        item['sex'] = 1 if student[name_index['name']['idx']] == '男' else 2
+        item['sex'] = 1 if student[name_index['sex']['idx']] == '男' else 2
         item['grade'] = student[name_index['grade']['idx']]
         item['college'] = student[name_index['college']['idx']]
         item['major'] = student[name_index['major']['idx']]
@@ -81,6 +81,7 @@ def read_class(students):
     class_infomation = []
     for student in students:
         item = {
+            'grade': student[name_index['grade']['idx']],
             'college': student[name_index['college']['idx']],
             'major': student[name_index['major']['idx']],
             'class_id': student[name_index['class_name']['idx']],
@@ -88,6 +89,8 @@ def read_class(students):
         if item not in class_infomation:
             class_infomation.append(item)
     for item in class_infomation:
+        # if models.ClassInfomation.objects.filter(**item).count() == 0:
+        #     models.ClassInfomation.objects.create(**item)
         models.ClassInfomation.objects.update_or_create(
             defaults=item,
             **item

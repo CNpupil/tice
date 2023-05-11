@@ -213,7 +213,7 @@ class TaskProgress(APIView):
         try:
             task_id = request.GET.get('task_id', -1)
 
-            data = models.Score.objects.values('teacher__name', 'teacher__uid').annotate(
+            data = models.Score.objects.filter(task_id=task_id).values('teacher__name', 'teacher__uid').annotate(
                 already_count=Count('end_score', filter=~Q(end_score=None)),
                 total_count=Count('id')
             )   

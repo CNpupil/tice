@@ -131,9 +131,10 @@ class Login(APIView):
             user = models.User.objects.filter(uid=uid).first()
             if user is None:
                 return JsonResponse({'code': 400, 'msg': '用户名或密码错误'})
-            
             if tools.genearteMD5(password) != user.password:
                 return JsonResponse({'code': 400, 'msg': '用户名或密码错误'})
+            if user.status == 0:
+                return JsonResponse({'code': 400, 'msg': '该账号暂时不可登录，请联系管理员'})
 
             payload = {
                 'uid': user.id,

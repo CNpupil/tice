@@ -1,0 +1,286 @@
+.
+|-- README.md
+|-- dump.rdb
+|-- main
+|   |-- __init__.py
+|   |-- __pycache__
+|   |   |-- __init__.cpython-38.pyc
+|   |   |-- admin.cpython-38.pyc
+|   |   |-- apps.cpython-38.pyc
+|   |   |-- models.cpython-38.pyc
+|   |   |-- tice_tools.cpython-38.pyc
+|   |   |-- tools.cpython-38.pyc
+|   |   `-- urls.cpython-38.pyc
+|   |-- admin.py
+|   |-- apps.py
+|   |-- middlewares
+|   |   |-- CheckTokenMiddleware.py
+|   |   `-- __pycache__
+|   |       `-- CheckTokenMiddleware.cpython-38.pyc
+|   |-- migrations
+|   |   |-- 0001_initial.py
+|   |   |-- 0002_auto_20230405_1852.py
+|   |   |-- 0003_score_studentinfomation.py
+|   |   |-- 0004_tempfile.py
+|   |   |-- 0005_auto_20230424_1100.py
+|   |   |-- 0006_rename_class_number_studentinfomation_class_name.py
+|   |   |-- 0007_auto_20230430_2337.py
+|   |   |-- 0008_auto_20230501_0023.py
+|   |   |-- 0009_auto_20230505_0102.py
+|   |   |-- 0010_auto_20230505_0104.py
+|   |   |-- 0011_auto_20230506_2143.py
+|   |   |-- __init__.py
+|   |   `-- __pycache__
+|   |       |-- 0001_initial.cpython-38.pyc
+|   |       |-- 0002_auto_20230405_1852.cpython-38.pyc
+|   |       |-- 0003_score_studentinfomation.cpython-38.pyc
+|   |       |-- 0004_tempfile.cpython-38.pyc
+|   |       |-- 0005_auto_20230424_1100.cpython-38.pyc
+|   |       |-- 0006_rename_class_number_studentinfomation_class_name.cpython-38.pyc
+|   |       |-- 0007_auto_20230429_0804.cpython-38.pyc
+|   |       |-- 0007_auto_20230430_2337.cpython-38.pyc
+|   |       |-- 0008_auto_20230501_0023.cpython-38.pyc
+|   |       |-- 0008_category.cpython-38.pyc
+|   |       |-- 0009_auto_20230505_0102.cpython-38.pyc
+|   |       |-- 0009_delete_category.cpython-38.pyc
+|   |       |-- 0009_score_teacher.cpython-38.pyc
+|   |       |-- 0010_auto_20230505_0104.cpython-38.pyc
+|   |       |-- 0011_auto_20230506_2143.cpython-38.pyc
+|   |       `-- __init__.cpython-38.pyc
+|   |-- models.py
+|   |-- process_file
+|   |   |-- __pycache__
+|   |   |   |-- student_basic_infomation.cpython-38.pyc
+|   |   |   |-- student_tice_data.cpython-38.pyc
+|   |   |   `-- write_data.cpython-38.pyc
+|   |   |-- student_basic_infomation.py
+|   |   |-- student_tice_data.py
+|   |   `-- write_data.py
+|   |-- standard.txt
+|   |-- tests.py
+|   |-- tice_tools.py
+|   |-- tools.py
+|   |-- urls.py
+|   `-- views
+|       |-- __pycache__
+|       |   |-- UploadData.cpython-38.pyc
+|       |   |-- User.cpython-38.pyc
+|       |   |-- export_data.cpython-38.pyc
+|       |   |-- score.cpython-38.pyc
+|       |   |-- task.cpython-38.pyc
+|       |   |-- upload.cpython-38.pyc
+|       |   `-- user.cpython-38.pyc
+|       |-- class_infomation.py
+|       |-- export_data.py
+|       |-- score.py
+|       |-- task.py
+|       |-- upload.py
+|       `-- user.py
+|-- manage.py
+|-- media
+|   |-- 0KslAGDvFxgaimdc.xlsx
+|   |-- 17gFCETMmOkaPoWq.xlsx
+|   |-- 3GUNpS5JxRDmCaHA.xlsx
+|   |-- 3TzwHp5bMy4FQfLK.xlsx
+|   |-- 3dgGi8jHNsbW4cYw.xlsx
+|   |-- 3v5fdGMcNkZPyopV.xlsx
+|   |-- 5ABxKC7c81diJySr.xlsx
+|   |-- 5ZqoXU4BThEil38Q.xlsx
+|   |-- 64UKbNTfhiQAREgx.xlsx
+|   |-- 74c3JKDSZv5liftR.xlsx
+|   |-- 7q9W3uICwjK2VaJn.xlsx
+|   |-- 8skGISfJ0iXhMpYR.xlsx
+|   |-- A4xyi5B0oKNjwWHg.xlsx
+|   |-- AocJxwGH5ST2sQ0I.xlsx
+|   |-- BkzdW5gCyvKfFRYU.xlsx
+|   |-- ChAHI8kyio4ra2Dw.xlsx
+|   |-- DsPeoz0Fu74CQv2B.xlsx
+|   |-- F7UgeKvVGH6TLC3t.xlsx
+|   |-- JAQEi6v7BacU8T2g.xlsx
+|   |-- JmVS6jXQ9zBxUwbp.xlsx
+|   |-- NXuJWeCsKgRUPz5o.xlsx
+|   |-- NgSq4t9CDKYL0aXF.xlsx
+|   |-- PIy93RWqouljfXT2.xlsx
+|   |-- QZUHmoGdgh2aTqCR.xlsx
+|   |-- TNV4AaSZhnbUOjri.xlsx
+|   |-- UPdGTEO7ZfKqHxrp.xlsx
+|   |-- VD5ZLYFnahqSk8Tf.xlsx
+|   |-- W7YsOrEaBngK9Uif.xlsx
+|   |-- WHfi49w1gTM62JqL.xlsx
+|   |-- WktXL9jylZJGwCU2.xlsx
+|   |-- XWVK6FNeSjRwI7b2.xlsx
+|   |-- YF9ov3t74W2QPyeT.xlsx
+|   |-- ZFN98AfbtnDBCz4e.xlsx
+|   |-- ZXO2hu4KpLDJAHtE.xlsx
+|   |-- Zjnk2GRDuLKtYF0d.xlsx
+|   |-- a4jQDSZ1c9EoxdfP.xlsx
+|   |-- cMPpAYOlaHBoiyUV.xlsx
+|   |-- dQ9zwWfHKXSPicD2.xlsx
+|   |-- fhKgsP14tNj6lYZR.xlsx
+|   |-- gX2xevitduLQSD0w.xlsx
+|   |-- hxFajlNg1YZSvUP0.xlsx
+|   |-- ila5D4bjRzhBTGFo.xlsx
+|   |-- models
+|   |   `-- sutdent_info_model.xlsx
+|   |-- nE6YBKzqbiHj21LI.xlsx
+|   |-- pFN9mCHU0sokSYq7.xlsx
+|   |-- pHP1QV4TJDIiFX8N.xlsx
+|   |-- rE9no0CdpzkNRgSm.xlsx
+|   |-- te3qJfKsH4MvFoYW.xlsx
+|   |-- temp
+|   |   |-- WktXL9jylZJGwCU2.xlsx
+|   |   |-- ffmpeg.dll
+|   |   |-- ila5D4bjRzhBTGFo.xlsx
+|   |   |-- ila5D4bjRzhBTGFo_XVgbppT.xlsx
+|   |   |-- rE9no0CdpzkNRgSm.xlsx
+|   |   |-- rE9no0CdpzkNRgSm_3PyfJpk.xlsx
+|   |   |-- rE9no0CdpzkNRgSm_XbZi7DK.xlsx
+|   |   |-- rE9no0CdpzkNRgSm_e7b2V4g.xlsx
+|   |   |-- rE9no0CdpzkNRgSm_lIMSt12.xlsx
+|   |   |-- rE9no0CdpzkNRgSm_pybdQ9N.xlsx
+|   |   |-- rE9no0CdpzkNRgSm_xBP1EQ1.xlsx
+|   |   |-- sutdent_info_model.xlsx
+|   |   |-- sutdent_info_model_5FtbhoJ.xlsx
+|   |   |-- sutdent_info_model_NGcEPMZ.xlsx
+|   |   |-- sutdent_info_model_O103VDN.xlsx
+|   |   |-- sutdent_info_model_TZ94YCF.xlsx
+|   |   |-- sutdent_info_model_gIAOpiA.xlsx
+|   |   |-- sutdent_info_model_t7zWtFx.xlsx
+|   |   |-- sutdent_info_model_w86V0qq.xlsx
+|   |   |-- sutdent_info_part.xlsx
+|   |   |-- sutdent_info_part1.xlsx
+|   |   |-- sutdent_info_part1_1SovisU.xlsx
+|   |   |-- sutdent_info_part1_6KvTX6f.xlsx
+|   |   |-- sutdent_info_part1_Bi4K01U.xlsx
+|   |   |-- sutdent_info_part1_CDBTm48.xlsx
+|   |   |-- sutdent_info_part1_HM1VdIh.xlsx
+|   |   |-- sutdent_info_part1_IavMOBa.xlsx
+|   |   |-- sutdent_info_part1_LXQVtAv.xlsx
+|   |   |-- sutdent_info_part1_LiX05Ti.xlsx
+|   |   |-- sutdent_info_part1_P2uuEhx.xlsx
+|   |   |-- sutdent_info_part1_R4O7wfc.xlsx
+|   |   |-- sutdent_info_part1_UPK5ebl.xlsx
+|   |   |-- sutdent_info_part1_USA6fk8.xlsx
+|   |   |-- sutdent_info_part1_UXM01SC.xlsx
+|   |   |-- sutdent_info_part1_Xjp3TsL.xlsx
+|   |   |-- sutdent_info_part1_aJqfeJR.xlsx
+|   |   |-- sutdent_info_part1_b0LRlMM.xlsx
+|   |   |-- sutdent_info_part1_nCWESOT.xlsx
+|   |   |-- sutdent_info_part1_tqKrzH4.xlsx
+|   |   |-- sutdent_info_part1_vbaTQyR.xlsx
+|   |   |-- sutdent_info_part1_wjhmO9Q.xlsx
+|   |   |-- sutdent_info_part_2z94LFI.xlsx
+|   |   |-- sutdent_info_part_5KZjkf8.xlsx
+|   |   |-- sutdent_info_part_6XSi3Nk.xlsx
+|   |   |-- sutdent_info_part_7Qm1BJc.xlsx
+|   |   |-- sutdent_info_part_7U07izA.xlsx
+|   |   |-- sutdent_info_part_7cj0TCg.xlsx
+|   |   |-- sutdent_info_part_7e9vQkt.xlsx
+|   |   |-- sutdent_info_part_8EhxRYh.xlsx
+|   |   |-- sutdent_info_part_8i67r1n.xlsx
+|   |   |-- sutdent_info_part_AXcfsbg.xlsx
+|   |   |-- sutdent_info_part_CXmBqUo.xlsx
+|   |   |-- sutdent_info_part_EzYM2g9.xlsx
+|   |   |-- sutdent_info_part_Fj4fWKT.xlsx
+|   |   |-- sutdent_info_part_GixVcVg.xlsx
+|   |   |-- sutdent_info_part_IilKVH9.xlsx
+|   |   |-- sutdent_info_part_Mqe9RMQ.xlsx
+|   |   |-- sutdent_info_part_NnjdwjD.xlsx
+|   |   |-- sutdent_info_part_RLU7XOr.xlsx
+|   |   |-- sutdent_info_part_SwCWsB2.xlsx
+|   |   |-- sutdent_info_part_Tuzwn5f.xlsx
+|   |   |-- sutdent_info_part_XJrX5mg.xlsx
+|   |   |-- sutdent_info_part_YPrXMrX.xlsx
+|   |   |-- sutdent_info_part_Z5b55Tl.xlsx
+|   |   |-- sutdent_info_part_ZVnyUd6.xlsx
+|   |   |-- sutdent_info_part_ZtpnYsE.xlsx
+|   |   |-- sutdent_info_part_bGXMRt0.xlsx
+|   |   |-- sutdent_info_part_cD6Dg1p.xlsx
+|   |   |-- sutdent_info_part_eEHsQaq.xlsx
+|   |   |-- sutdent_info_part_f2gZIwr.xlsx
+|   |   |-- sutdent_info_part_h4MHVeM.xlsx
+|   |   |-- sutdent_info_part_h7lrFT8.xlsx
+|   |   |-- sutdent_info_part_hG1mepI.xlsx
+|   |   |-- sutdent_info_part_isknvla.xlsx
+|   |   |-- sutdent_info_part_leAS6Wb.xlsx
+|   |   |-- sutdent_info_part_lgNDOfe.xlsx
+|   |   |-- sutdent_info_part_mZQqebt.xlsx
+|   |   |-- sutdent_info_part_nr4m0IP.xlsx
+|   |   |-- sutdent_info_part_qz25Dp0.xlsx
+|   |   |-- sutdent_info_part_rQioKca.xlsx
+|   |   |-- sutdent_info_part_sJ1JQt5.xlsx
+|   |   |-- sutdent_info_part_uIUMuJD.xlsx
+|   |   |-- sutdent_info_part_wDToDE3.xlsx
+|   |   |-- sutdent_info_part_xLGaYw0.xlsx
+|   |   |-- sutdent_info_part_xmgpRIu.xlsx
+|   |   |-- sutdent_info_part_xsnK57w.xlsx
+|   |   |-- sutdent_info_part_zQWeey3.xlsx
+|   |   |-- test_sorce.xlsx
+|   |   |-- test_sorce_08WqrC5.xlsx
+|   |   |-- test_sorce_2beDaHn.xlsx
+|   |   |-- test_sorce_2ek5bwe.xlsx
+|   |   |-- test_sorce_5AFGu8E.xlsx
+|   |   |-- test_sorce_8MV3UVA.xlsx
+|   |   |-- test_sorce_9T3Zbu3.xlsx
+|   |   |-- test_sorce_Azdeaby.xlsx
+|   |   |-- test_sorce_C1HfPGG.xlsx
+|   |   |-- test_sorce_K8gxBXS.xlsx
+|   |   |-- test_sorce_LLGSyDJ.xlsx
+|   |   |-- test_sorce_LtFKdfZ.xlsx
+|   |   |-- test_sorce_MVebDvb.xlsx
+|   |   |-- test_sorce_MVhYJcL.xlsx
+|   |   |-- test_sorce_PzvJXFL.xlsx
+|   |   |-- test_sorce_Q3rCNGh.xlsx
+|   |   |-- test_sorce_Q5J8Akh.xlsx
+|   |   |-- test_sorce_RHbNilv.xlsx
+|   |   |-- test_sorce_VXZerSp.xlsx
+|   |   |-- test_sorce_We7IR38.xlsx
+|   |   |-- test_sorce_XTbNlky.xlsx
+|   |   |-- test_sorce_Zvm16L4.xlsx
+|   |   |-- test_sorce_bRbeAyo.xlsx
+|   |   |-- test_sorce_c6hTFxw.xlsx
+|   |   |-- test_sorce_cKyZ4dP.xlsx
+|   |   |-- test_sorce_d0e6Bz6.xlsx
+|   |   |-- test_sorce_d2dMZPX.xlsx
+|   |   |-- test_sorce_f07tPvF.xlsx
+|   |   |-- test_sorce_iU3QRX0.xlsx
+|   |   |-- test_sorce_iuyFTSY.xlsx
+|   |   |-- test_sorce_jUZVhsY.xlsx
+|   |   |-- test_sorce_jrP4MMW.xlsx
+|   |   |-- test_sorce_l9RDB4A.xlsx
+|   |   |-- test_sorce_mE9SVKM.xlsx
+|   |   |-- test_sorce_nyAv8r5.xlsx
+|   |   |-- test_sorce_oU9rm3q.xlsx
+|   |   |-- test_sorce_pSzZe0W.xlsx
+|   |   |-- test_sorce_scpGRSi.xlsx
+|   |   |-- test_sorce_srTmuGW.xlsx
+|   |   |-- test_sorce_vgmsZTf.xlsx
+|   |   |-- test_sorce_vpX0Rja.xlsx
+|   |   `-- test_sorce_wnYlWII.xlsx
+|   |-- trURwP0TIqEaVM9S.xlsx
+|   |-- uHUGB6s7SmWKkNzP.xlsx
+|   |-- uadmZHJ2sg47YeLr.xlsx
+|   |-- xPAat7X08lBhKnTp.xlsx
+|   |-- xZ3MhslDeQRKPFHU.xlsx
+|   |-- xfTBjuLWPGKg8De0.xlsx
+|   |-- yHT1gFqkErmSZKNw.xlsx
+|   |-- yLCJnx14BuqEFWKI.xlsx
+|   |-- yVg3Sjs6EuLih0WK.xlsx
+|   |-- zGL2AYcvlrx6dunU.xlsx
+|   |-- zKkSyJD5RFmOr6sa.xlsx
+|   `-- zSlOvDsc1qxXnHUJ.xlsx
+|-- standard.txt
+|-- tice
+|   |-- __init__.py
+|   |-- __pycache__
+|   |   |-- __init__.cpython-38.pyc
+|   |   |-- settings.cpython-38.pyc
+|   |   |-- urls.cpython-38.pyc
+|   |   `-- wsgi.cpython-38.pyc
+|   |-- asgi.py
+|   |-- settings.py
+|   |-- urls.py
+|   `-- wsgi.py
+`-- tree.txt
+
+15 directories, 268 files

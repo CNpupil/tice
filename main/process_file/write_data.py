@@ -24,10 +24,11 @@ def write_data_to_file(data, filename):
         'right_eye': '右眼',
     }
     for item in data:
-        if item['student__sex'] == 2 and item.get('run800', 'pp') != 'pp':
+        if item['student__sex'] == 2 and item.get('run800', 'pp') != 'pp' and item['run800']:
             item['run800'] = tice_tools.int_to_time(item['run800'])
-        if item['student__sex'] == 1 and item.get('run1000', 'pp') != 'pp':
+        if item['student__sex'] == 1 and item.get('run1000', 'pp') != 'pp' and item['run1000']:
             item['run1000'] = tice_tools.int_to_time(item['run1000'])
+        item['student__sex'] = '男' if item['student__sex'] == 1 else '女'
         for key, value in projetcts.items():
             if item.get(key, 'pp') != 'pp':
                 item[value] = item[key]
