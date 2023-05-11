@@ -198,6 +198,8 @@ def find_median(lst):
 # 计算单个项目的单个统计数据，比如jump的min
 def calc_item_statics(task_id, item, statics_name):
     scores = Score.objects.filter(task_id=task_id).values(item)
+    if scores.count() == 0:
+        return 0
     scores = list(t[item] if t[item] else 0 for t in scores)
     if statics_name == 'min':
         return min(scores)

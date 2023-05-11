@@ -10,22 +10,6 @@ import json
 import math
 
 
-class View(APIView):
-        # 查询逻辑
-    def get(self, request, *args, **kwargs):
-        pass
-        # 新增逻辑
-    def post(self, request, *args, **kwargs):
-        pass
-        # 修改逻辑
-    def put(self, request, *args, **kwargs):
-        pass
-        # 删除逻辑
-    def delete(self, request, *args, **kwargs):
-        pass
-
-
-
 class Task(APIView):
     def get(self, request, *args, **kwargs):
         ret = {'code': 200, 'msg': 'ok'}

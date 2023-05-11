@@ -19,6 +19,9 @@ class ExportTaskData(APIView):
             items = data.get('items', [])
 
             data = models.Score.objects.filter(task_id=task_id).values(
+                'student__uid',
+                'student__name',
+                'student__sex',
                 * items
             )
             # ret['data'] = json.dumps(list(data))
@@ -26,6 +29,7 @@ class ExportTaskData(APIView):
 
         except Exception as e:
             ret = {'code': 500, 'msg': 'Timeout'}
+            ret = {'code': 500, 'msg': 'Timeout', 'error': str(e)}
 
         return JsonResponse(ret)
     
