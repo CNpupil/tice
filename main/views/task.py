@@ -10,6 +10,22 @@ import json
 import math
 
 
+class View(APIView):
+        # 查询逻辑
+    def get(self, request, *args, **kwargs):
+        pass
+        # 新增逻辑
+    def post(self, request, *args, **kwargs):
+        pass
+        # 修改逻辑
+    def put(self, request, *args, **kwargs):
+        pass
+        # 删除逻辑
+    def delete(self, request, *args, **kwargs):
+        pass
+
+
+
 class Task(APIView):
     def get(self, request, *args, **kwargs):
         ret = {'code': 200, 'msg': 'ok'}
@@ -194,7 +210,7 @@ class StudentFromTaskByTeacher(APIView):
             score_list = data.get('score_list', [])
 
             for score in score_list:
-                models.Score.objects.filter(task_id=task_id, teacher_id=teacher_id, student_id=score['student_id']).update(
+                models.Score.objects.filter(task_id=task_id, student_id=score['student_id']).update(
                     **score
                 )
                 tice_tools.calc_all_score(task_id, score['student_id'])
@@ -213,7 +229,7 @@ class TaskProgress(APIView):
         try:
             task_id = request.GET.get('task_id', -1)
 
-            data = models.Score.objects.values('teacher__name').annotate(
+            data = models.Score.objects.values('teacher__name', 'teacher__uid').annotate(
                 already_count=Count('end_score', filter=~Q(end_score=None)),
                 total_count=Count('id')
             )   
