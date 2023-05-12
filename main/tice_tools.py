@@ -218,4 +218,7 @@ def calc_item_statics(task_id, item, statics_name):
     elif statics_name == 'unqualified':
         return calc_tags_count(scores)[statics_name] / len(scores)
     return None
-    
+
+# 用户学生查询时使用
+def consruct_item(project_name, value, score):
+    return {'project_name': project_name, value: value, 'score': score}

@@ -30,12 +30,12 @@ class CheckTokenMiddleware(MiddlewareMixin):
                 raise jwt.InvalidTokenError('token already expired')
                 
             print(payload['auth'], path)
-            # if payload['auth'] == 2:
-            #     if path not in ['taskbyteacher', 'studentfromtaskbyteacher', 'studentfromtaskbyteacher']:
-            #         raise jwt.InvalidTokenError('Permission denied')
-            # elif payload['auth'] == 3:
-            #     if path not in ['scoreonstudent']:
-            #         raise jwt.InvalidTokenError('Permission denied')
+            if payload['auth'] == 2:
+                if path not in ['taskbyteacher', 'studentfromtaskbyteacher', 'studentfromtaskbyteacher', 'scorestandard']:
+                    raise jwt.InvalidTokenError('Permission denied')
+            elif payload['auth'] == 3:
+                if path not in ['scoreonstudent', 'scorestandard']:
+                    raise jwt.InvalidTokenError('Permission denied')
 
         except (jwt.InvalidTokenError, User.DoesNotExist) as e:
             return JsonResponse({'error': str(e)}, status=401)

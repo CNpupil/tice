@@ -4,12 +4,12 @@ from django.http import JsonResponse
 
 from main import models
 from main import tools, tice_tools
+from main.tice_tools import consruct_item
 
 import json
 
 
-def consruct_item(project_name, value, score):
-    return {'project_name': project_name, value: value, 'score': score}
+
 
 
 class ScoreOnStudent(APIView):

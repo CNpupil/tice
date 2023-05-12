@@ -75,7 +75,7 @@ class Task(APIView):
 
             # validate data
 
-            task = models.Task.objects.filter(pk=data.get('task_pk', 0)).first()
+            task = models.Task.objects.filter(pk=data.get('task_id', 0)).first()
             if task is None:
                 return JsonResponse({'code': 400, 'msg': '任务不存在'})
             task.delete()        
@@ -140,7 +140,7 @@ class TaskByTeacher(APIView):
 
             task_list = [t['task_id'] for t in models.Score.objects.filter(teacher_id=teacher_id).values('task_id')]
 
-            print(task_list)
+            # print(task_list)
 
             data = models.Task.objects.filter(pk__in=task_list)
             ret['data'] = serializers.serialize('json', data)
