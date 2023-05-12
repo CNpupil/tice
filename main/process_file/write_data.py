@@ -22,6 +22,14 @@ def write_data_to_file(data, filename):
         'pull_up': '引体向上',
         'left_eye': '左眼',
         'right_eye': '右眼',
+        'bmi_score': 'BMI得分',
+        'pulmonary_score': '肺活量得分',
+        'run50_score': '50m得分',
+        'jump_score': '跳远得分',
+        'flexion_score': '坐位体前屈得分',
+        'runlong_score': '800m/1000m得分',
+        'curlorup_score': '仰卧起坐/引体向上得分',
+        'end_score': '最终得分',
     }
     for item in data:
         if item['student__sex'] == 2 and item.get('run800', 'pp') != 'pp' and item['run800']:

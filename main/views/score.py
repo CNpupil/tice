@@ -194,9 +194,11 @@ class ScoreStandard(APIView):
     
     # 修改一个项目的评分标准
     def put(self, request, *args, **kwargs):
-        ret = {'code': 200, 'msg': 'ok'}
+        ret = {'code': 200, 'msg': '修改成功'}
         try:
             data = json.loads(request.body).get('data', {})
+            # print(request.body)
+            # print(json.loads(request.body)['body'])
             key = data.get('key', '')
             grade = data.get('grade', 'low')
             value = data.get('value', '[]')
